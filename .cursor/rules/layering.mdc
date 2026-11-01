@@ -1,0 +1,7 @@
+---
+description: Layering rules for approval code
+globs: ["backend/src/InvoiceApp.Api/Controllers/**", "backend/src/InvoiceApp.Domain/**", "backend/src/InvoiceApp.Api/wwwroot/**"]
+alwaysApply: false
+---
+Controllers and wwwroot contain no business rules and no approval limit numbers.
+Approval limits live only in backend/src/InvoiceApp.Domain/ApprovalLimits.cs.
