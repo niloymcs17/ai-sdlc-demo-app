@@ -4,13 +4,13 @@
 
 | Metric | Value |
 | --- | --- |
-| Total interactions | 246 |
-| Outcome | success=9, partial=1, rework=1 |
-| Mode | agent=241, ask=1, plan=4 |
-| Skills used | openspec-propose, review-diff, spec-to-tasks |
+| Total interactions | 332 |
+| Outcome | success=11, partial=2, rework=1 |
+| Mode | agent=327, ask=1, plan=4 |
+| Skills used | openspec-propose, review-diff, spec-to-tasks, write-approval-tests |
 | Sub-agents used | explore, general-purpose, spec-agent, unknown |
 | MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_snapshot |
-| Human interventions | 11 |
+| Human interventions | 14 |
 
 ## Chronological
 
@@ -262,6 +262,92 @@
 | 2026-11-01T18:03:12Z | Cursor | agent |  | git status --short --untracked-files=all -- openspec .cursor .ai-log; git check- | shell |  |  |  |
 | 2026-11-01T18:03:52Z | Cursor | agent |  |  |  |  |  |  |
 | 2026-11-01T18:03:55Z | Cursor | agent |  | git ls-files openspec; Write-Output '---ignored---'; git status --short --ignore | shell |  |  |  |
+| 2026-11-01T18:04:31Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:04:37Z | Cursor | agent |  | python scripts/render_log.py git add -- openspec .cursor .ai-log git commit --tr | shell |  |  |  |
+| 2026-11-01T18:05:15Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:05:20Z | Cursor | agent |  | git show --name-only --format="%H%n%s" HEAD | shell |  |  |  |
+| 2026-11-01T18:05:30Z | spec-agent | agent |  | Implement Task 10 in full at workspace `c:\My Files\ai-sdlc-demo-app`. The brief |  |  |  |  |
+| 2026-11-01T18:05:39Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:05:43Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:05:44Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:05:52Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:06:01Z | Cursor | agent |  | check if there is any un commited changes make the changes  |  |  |  |  |
+| 2026-11-01T18:06:20Z | general-purpose | agent |  | Workspace: c:\My Files\ai-sdlc-demo-app. Branch is likely feature/approval-limit |  |  |  |  |
+| 2026-11-01T18:06:22Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:06:44Z | Cursor | agent |  | git diff && git diff --stat && git status -u --short | shell |  |  |  |
+| 2026-11-01T18:06:44Z | Cursor | agent |  | git status | shell |  |  |  |
+| 2026-11-01T18:06:57Z | Cursor | agent |  | git log -8 --oneline | shell |  |  |  |
+| 2026-11-01T18:07:36Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:07:46Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:07:52Z | Cursor | agent |  | @task/11-phase1-single-approver-limits.md implemnet this  |  |  |  |  |
+| 2026-11-01T18:08:12Z | general-purpose | agent |  | The user now wants Task 11 implemented exactly. Stop any broader or conflicting  |  |  |  |  |
+| 2026-11-01T18:08:15Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:08:37Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalRefusedException.cs |  |  |
+| 2026-11-01T18:08:37Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:08:37Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T18:08:39Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\InMemoryInvoiceRepository.cs |  |  |
+| 2026-11-01T18:08:39Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T18:08:40Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T18:08:40Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\InMemoryInvoiceRepository.cs |  |  |
+| 2026-11-01T18:08:41Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T18:08:42Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T18:08:44Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T18:09:23Z | Cursor | agent |  |  | shell |  | 34/0 |  |
+| 2026-11-01T18:10:19Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:10:37Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\Roles.cs |  |  |
+| 2026-11-01T18:10:39Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalRefusedException.cs |  |  |
+| 2026-11-01T18:10:41Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T18:10:42Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\Invoice.cs |  |  |
+| 2026-11-01T18:10:43Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\Controllers\ApprovalsController.cs |  |  |
+| 2026-11-01T18:10:43Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\wwwroot\app.js |  |  |
+| 2026-11-01T18:10:46Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\README.md |  |  |
+| 2026-11-01T18:10:47Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\AGENTS.md |  |  |
+| 2026-11-01T18:10:57Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T18:11:05Z | Cursor | agent |  | dotnet build backend/src/InvoiceApp.Api/InvoiceApp.Api.csproj --nologo | shell |  |  |  |
+| 2026-11-01T18:11:29Z | Cursor | agent |  | Remove-Item -LiteralPath "backend\src\InvoiceApp.Domain\ApprovalRoles.cs" -Error | shell |  |  |  |
+| 2026-11-01T18:11:48Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\InMemoryInvoiceRepository.cs |  |  |
+| 2026-11-01T18:11:51Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:12:08Z | Cursor | agent |  | git status --short; git diff --stat | shell |  |  |  |
+| 2026-11-01T18:12:08Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:12:26Z | Cursor | agent |  |  | shell |  | 14/10 |  |
+| 2026-11-01T18:12:38Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T18:12:45Z | Cursor | agent |  | git diff -- AGENTS.md backend/src/InvoiceApp.Domain/ApprovalService.cs backend/s | shell |  |  |  |
+| 2026-11-01T18:12:54Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:13:15Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:13:16Z | Cursor | agent |  |  | shell |  | 24/0 |  |
+| 2026-11-01T18:13:27Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:13:41Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\InMemoryInvoiceRepository.cs |  |  |
+| 2026-11-01T18:13:42Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T18:13:42Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T18:13:44Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T18:13:59Z | Cursor | agent |  | dotnet build backend/InvoiceApp.sln --nologo | shell |  |  |  |
+| 2026-11-01T18:14:01Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:14:26Z | Cursor | agent |  |  | browser_navigate |  |  |  |
+| 2026-11-01T18:14:30Z | Cursor | agent |  |  | shell |  | 27/0 |  |
+| 2026-11-01T18:14:32Z | Cursor | agent |  |  | browser_lock |  |  |  |
+| 2026-11-01T18:14:41Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:14:43Z | Cursor | agent |  |  | browser_lock |  |  |  |
+| 2026-11-01T18:14:55Z | Cursor | agent |  | $ErrorActionPreference = 'Stop'  function Login([string]$user) {   $body = @{ us | shell |  |  |  |
+| 2026-11-01T18:15:19Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:15:34Z | Cursor | agent |  | $ErrorActionPreference = 'Stop'  function Login([string]$user) {   $body = @{ us | shell |  |  |  |
+| 2026-11-01T18:15:50Z | Cursor | agent |  | dotnet build backend/src/InvoiceApp.Api/InvoiceApp.Api.csproj --nologo --no-rest | shell |  |  |  |
+| 2026-11-01T18:16:07Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\InMemoryInvoiceRepository.cs |  |  |
+| 2026-11-01T18:16:15Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:16:30Z | Cursor | agent |  | git status --short; git add -- README.md AGENTS.md backend/src/InvoiceApp.Api/Co | shell |  |  |  |
+| 2026-11-01T18:16:33Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:16:46Z | Cursor | agent |  | $conn = Get-NetTCPConnection -LocalPort 5000 -State Listen -ErrorAction Silently | shell |  |  |  |
+| 2026-11-01T18:16:57Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:17:14Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:17:35Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:17:40Z | Cursor | agent |  | $conn = Get-NetTCPConnection -LocalPort 5000 -State Listen -ErrorAction Silently | shell |  |  |  |
+| 2026-11-01T18:17:46Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:18:20Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:18:27Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:18:37Z | Cursor | agent |  | $conn = Get-NetTCPConnection -LocalPort 5000 -State Listen -ErrorAction Silently | shell |  |  |  |
+| 2026-11-01T18:19:14Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:19:21Z | implementer | agent | implementation |  |  |  |  | success |
+| 2026-11-01T18:19:29Z | Cursor | agent |  |  | shell |  | 27/0 |  |
+| 2026-11-01T18:19:46Z |  | agent | implementation | D12: changed only arguments of existing Approve tests; assertions untouched |  | backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs |  | success |
 
 ## Human oversight
 
@@ -329,6 +415,24 @@
 
 - Decision: Human decision D8 (E10): A zero or negative amount is refused because the amount must be greater than zero. Message: Invoice amount must be greater than zero. Reason: defence in depth at approval time.
 - Verification: Recorded as a separate human decision for E10
+- Limitation: none
+
+### 20261101T181921Z-stop
+
+- Decision: Added missing DecidedAt-unchanged assertions to refusal tests
+- Verification: Read every test; red run saved
+- Limitation: none
+
+### 20261101T181921Z-stop
+
+- Decision: Accepted; verified validation precedes mutation
+- Verification: Read diff, git grep for literals, dotnet test green
+- Limitation: none
+
+### 20261101T181946Z-manual
+
+- Decision: D12: changed only arguments of existing Approve tests; assertions untouched
+- Verification: none
 - Limitation: none
 
 ## Limitations

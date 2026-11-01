@@ -15,8 +15,8 @@ public class InMemoryInvoiceRepository : IInvoiceRepository
         new Invoice { Id = "INV-1003", CustomerName = "Riverside Charter", Amount = 12300.00m, Status = InvoiceStatus.Approved, DecidedBy = "demo.approver", DecidedAt = DateTime.UtcNow.AddDays(-2) },
         new Invoice { Id = "INV-1004", CustomerName = "Oakwood Independent", Amount = 615.75m, Status = InvoiceStatus.PendingApproval },
         new Invoice { Id = "INV-1005", CustomerName = "Maple Grove Prep", Amount = 310.00m, Status = InvoiceStatus.Draft },
-        new Invoice { Id = "INV-1006", CustomerName = "Northwind Academy", Amount = ApprovalLimits.ManagerLimit + 1m, Status = InvoiceStatus.PendingApproval },
-        new Invoice { Id = "INV-1007", CustomerName = "Summit College", Amount = ApprovalLimits.DirectorLimit + 1m, Status = InvoiceStatus.PendingApproval },
+        new Invoice { Id = "INV-1006", CustomerName = "Northwind Academy", Amount = 75_000m, Status = InvoiceStatus.PendingApproval },
+        new Invoice { Id = "INV-1007", CustomerName = "Summit College", Amount = 750_000m, Status = InvoiceStatus.PendingApproval },
         new Invoice { Id = "INV-1008", CustomerName = "Harbor Institute", Amount = ApprovalLimits.DirectorLimit, Status = InvoiceStatus.PendingApproval },
     };
 
