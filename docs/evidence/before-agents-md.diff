@@ -1,0 +1,295 @@
+diff --git a/README.md b/README.md
+index 5e104df..a40e3ec 100644
+--- a/README.md
++++ b/README.md
+@@ -14,6 +14,8 @@ Open http://localhost:5000 and sign in:
+ | --- | --- | --- |
+ | `demo.approver` | `ChangeMe123!` | Approver |
+ | `demo.admin` | `ChangeMe123!` | Admin |
++| `demo.manager` | `ChangeMe123!` | Manager (approves up to 50,000) |
++| `demo.director` | `ChangeMe123!` | Director (approves up to 500,000) |
+ 
+ These are demo accounts for a local, in-memory app. They are not real credentials.
+ 
+@@ -21,7 +23,7 @@ These are demo accounts for a local, in-memory app. They are not real credential
+ 
+ 1. Create an invoice (it starts as a draft).
+ 2. Submit it for approval.
+-3. An approver approves it, or rejects it with a reason.
++3. A Manager or Director approves it, within that role's limit, or rejects it with a reason. An amount over the sign-in role's limit is refused and the invoice stays pending.
+ 
+ Invoices move through Draft, Pending Approval, then Approved or Rejected.
+ 
+diff --git a/backend/src/InvoiceApp.Api/Controllers/ApprovalsController.cs b/backend/src/InvoiceApp.Api/Controllers/ApprovalsController.cs
+index 90d1b39..91465d1 100644
+--- a/backend/src/InvoiceApp.Api/Controllers/ApprovalsController.cs
++++ b/backend/src/InvoiceApp.Api/Controllers/ApprovalsController.cs
+@@ -6,7 +6,7 @@ namespace InvoiceApp.Api.Controllers;
+ 
+ [ApiController]
+ [Route("api/[controller]")]
+-[RequireRole("Approver", "Admin")]
++[RequireRole("Approver", "Admin", ApprovalRoles.Manager, ApprovalRoles.Director)]
+ public class ApprovalsController : ApiControllerBase
+ {
+     private readonly ApprovalService _approvals;
+@@ -20,7 +20,11 @@ public class ApprovalsController : ApiControllerBase
+ 
+     [HttpPost("{invoiceId}/approve")]
+     public ActionResult<Invoice> Approve(string invoiceId) =>
+-        Handle(() => _approvals.Approve(invoiceId, HttpContext.GetSession().Username));
++        Handle(() =>
++        {
++            var session = HttpContext.GetSession();
++            return _approvals.Approve(invoiceId, session.Username, session.Role);
++        });
+ 
+     [HttpPost("{invoiceId}/reject")]
+     public ActionResult<Invoice> Reject(string invoiceId, [FromBody] RejectRequest request) =>
+diff --git a/backend/src/InvoiceApp.Api/InMemoryInvoiceRepository.cs b/backend/src/InvoiceApp.Api/InMemoryInvoiceRepository.cs
+index f51a0b6..3d32ad8 100644
+--- a/backend/src/InvoiceApp.Api/InMemoryInvoiceRepository.cs
++++ b/backend/src/InvoiceApp.Api/InMemoryInvoiceRepository.cs
+@@ -6,7 +6,7 @@ namespace InvoiceApp.Api;
+ public class InMemoryInvoiceRepository : IInvoiceRepository
+ {
+     private readonly object _lock = new();
+-    private int _nextNumber = 1006;
++    private int _nextNumber = 1007;
+ 
+     private readonly List<Invoice> _invoices = new()
+     {
+@@ -15,6 +15,7 @@ public class InMemoryInvoiceRepository : IInvoiceRepository
+         new Invoice { Id = "INV-1003", CustomerName = "Riverside Charter", Amount = 12300.00m, Status = InvoiceStatus.Approved, DecidedBy = "demo.approver", DecidedAt = DateTime.UtcNow.AddDays(-2) },
+         new Invoice { Id = "INV-1004", CustomerName = "Oakwood Independent", Amount = 615.75m, Status = InvoiceStatus.PendingApproval },
+         new Invoice { Id = "INV-1005", CustomerName = "Maple Grove Prep", Amount = 310.00m, Status = InvoiceStatus.Draft },
++        new Invoice { Id = "INV-1006", CustomerName = "Harbor Medical Group", Amount = 75_000.00m, Status = InvoiceStatus.PendingApproval },
+     };
+ 
+     public IReadOnlyList<Invoice> GetAll()
+diff --git a/backend/src/InvoiceApp.Api/appsettings.json b/backend/src/InvoiceApp.Api/appsettings.json
+index 4b4e63f..9dadbd6 100644
+--- a/backend/src/InvoiceApp.Api/appsettings.json
++++ b/backend/src/InvoiceApp.Api/appsettings.json
+@@ -8,6 +8,8 @@
+   "AllowedHosts": "*",
+   "Users": [
+     { "Username": "demo.approver", "Password": "ChangeMe123!", "Role": "Approver" },
+-    { "Username": "demo.admin", "Password": "ChangeMe123!", "Role": "Admin" }
++    { "Username": "demo.admin", "Password": "ChangeMe123!", "Role": "Admin" },
++    { "Username": "demo.manager", "Password": "ChangeMe123!", "Role": "Manager" },
++    { "Username": "demo.director", "Password": "ChangeMe123!", "Role": "Director" }
+   ]
+ }
+diff --git a/backend/src/InvoiceApp.Domain/ApprovalRoles.cs b/backend/src/InvoiceApp.Domain/ApprovalRoles.cs
+new file mode 100644
+index 0000000..fe62711
+--- /dev/null
++++ b/backend/src/InvoiceApp.Domain/ApprovalRoles.cs
+@@ -0,0 +1,8 @@
++namespace InvoiceApp.Domain;
++
++/// <summary>Roles that may approve an invoice, subject to the limits in <see cref="ApprovalService"/>.</summary>
++public static class ApprovalRoles
++{
++    public const string Manager = "Manager";
++    public const string Director = "Director";
++}
+diff --git a/backend/src/InvoiceApp.Domain/ApprovalService.cs b/backend/src/InvoiceApp.Domain/ApprovalService.cs
+index 4b2ec92..9b16864 100644
+--- a/backend/src/InvoiceApp.Domain/ApprovalService.cs
++++ b/backend/src/InvoiceApp.Domain/ApprovalService.cs
+@@ -1,11 +1,17 @@
++using System.Globalization;
++
+ namespace InvoiceApp.Domain;
+ 
+ /// <summary>
+ /// Moves an invoice through its lifecycle: Draft -> PendingApproval -> Approved or Rejected.
+ /// One invoice at a time, decided as a whole by a single approver.
++/// A Manager may approve up to <see cref="ManagerApprovalLimit"/>; a Director up to <see cref="DirectorApprovalLimit"/>.
+ /// </summary>
+ public class ApprovalService
+ {
++    public const decimal ManagerApprovalLimit = 50_000m;
++    public const decimal DirectorApprovalLimit = 500_000m;
++
+     private readonly IInvoiceRepository _repository;
+ 
+     public ApprovalService(IInvoiceRepository repository)
+@@ -28,10 +34,11 @@ public class ApprovalService
+         return invoice;
+     }
+ 
+-    public Invoice Approve(string invoiceId, string approver)
++    public Invoice Approve(string invoiceId, string approver, string role)
+     {
+         var invoice = Find(invoiceId);
+         EnsurePending(invoice);
++        EnsureWithinRoleLimit(invoice, role);
+ 
+         invoice.Status = InvoiceStatus.Approved;
+         invoice.DecidedBy = approver;
+@@ -70,4 +77,46 @@ public class ApprovalService
+                 $"Invoice {invoice.Id} is {invoice.Status}; only pending invoices can be decided.");
+         }
+     }
++
++    /// <summary>
++    /// Refuses the approval before any field on the invoice is changed.
++    /// Boundaries are inclusive: an amount equal to the role limit is allowed.
++    /// </summary>
++    private static void EnsureWithinRoleLimit(Invoice invoice, string role)
++    {
++        if (!TryGetLimit(role, out var limit, out var roleName))
++        {
++            throw new InvalidOperationException($"Role '{role}' cannot approve invoices.");
++        }
++
++        if (invoice.Amount <= limit)
++        {
++            return;
++        }
++
++        var formattedLimit = limit.ToString("#,0", CultureInfo.InvariantCulture);
++        throw new InvalidOperationException(
++            $"Amount exceeds the {roleName} approval limit of {formattedLimit}.");
++    }
++
++    private static bool TryGetLimit(string role, out decimal limit, out string roleName)
++    {
++        if (string.Equals(role, ApprovalRoles.Manager, StringComparison.OrdinalIgnoreCase))
++        {
++            limit = ManagerApprovalLimit;
++            roleName = ApprovalRoles.Manager;
++            return true;
++        }
++
++        if (string.Equals(role, ApprovalRoles.Director, StringComparison.OrdinalIgnoreCase))
++        {
++            limit = DirectorApprovalLimit;
++            roleName = ApprovalRoles.Director;
++            return true;
++        }
++
++        limit = 0;
++        roleName = string.Empty;
++        return false;
++    }
+ }
+diff --git a/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs b/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs
+index 9be303d..5e86ab1 100644
+--- a/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs
++++ b/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs
+@@ -34,7 +34,7 @@ public class ApprovalServiceTests
+     {
+         var service = ServiceFor(InvoiceWith("INV-1", InvoiceStatus.PendingApproval));
+ 
+-        var result = service.Approve("INV-1", "demo.approver");
++        var result = service.Approve("INV-1", "demo.approver", ApprovalRoles.Manager);
+ 
+         Assert.Equal(InvoiceStatus.Approved, result.Status);
+         Assert.Equal("demo.approver", result.DecidedBy);
+@@ -46,7 +46,7 @@ public class ApprovalServiceTests
+     {
+         var service = ServiceFor(InvoiceWith("INV-1", InvoiceStatus.Draft));
+ 
+-        Assert.Throws<InvalidOperationException>(() => service.Approve("INV-1", "demo.approver"));
++        Assert.Throws<InvalidOperationException>(() => service.Approve("INV-1", "demo.approver", ApprovalRoles.Manager));
+     }
+ 
+     [Fact]
+@@ -54,7 +54,7 @@ public class ApprovalServiceTests
+     {
+         var service = ServiceFor();
+ 
+-        Assert.Throws<KeyNotFoundException>(() => service.Approve("INV-404", "demo.approver"));
++        Assert.Throws<KeyNotFoundException>(() => service.Approve("INV-404", "demo.approver", ApprovalRoles.Manager));
+     }
+ 
+     [Fact]
+@@ -75,4 +75,84 @@ public class ApprovalServiceTests
+ 
+         Assert.Throws<ArgumentException>(() => service.Reject("INV-1", "demo.approver", "  "));
+     }
++
++    [Theory]
++    [InlineData(1)]
++    [InlineData(49_999.99)]
++    [InlineData(50_000)]
++    public void Approve_ManagerAtOrUnderLimit_ApprovesInvoice(decimal amount)
++    {
++        var invoice = PendingInvoice("INV-1", amount);
++
++        var result = ServiceFor(invoice).Approve("INV-1", "demo.manager", ApprovalRoles.Manager);
++
++        Assert.Equal(InvoiceStatus.Approved, result.Status);
++        Assert.Equal("demo.manager", result.DecidedBy);
++        Assert.NotNull(result.DecidedAt);
++    }
++
++    [Fact]
++    public void Approve_ManagerOneCentOverLimit_RefusesAndLeavesInvoiceUnchanged()
++    {
++        var invoice = PendingInvoice("INV-1", 50_000.01m);
++        var service = ServiceFor(invoice);
++
++        var error = Assert.Throws<InvalidOperationException>(() =>
++            service.Approve("INV-1", "demo.manager", ApprovalRoles.Manager));
++
++        Assert.Equal("Amount exceeds the Manager approval limit of 50,000.", error.Message);
++        AssertInvoiceUnchanged(invoice);
++    }
++
++    [Theory]
++    [InlineData(50_000.01)]
++    [InlineData(499_999.99)]
++    [InlineData(500_000)]
++    public void Approve_DirectorAtOrUnderLimit_ApprovesInvoice(decimal amount)
++    {
++        var invoice = PendingInvoice("INV-1", amount);
++
++        var result = ServiceFor(invoice).Approve("INV-1", "demo.director", ApprovalRoles.Director);
++
++        Assert.Equal(InvoiceStatus.Approved, result.Status);
++        Assert.Equal("demo.director", result.DecidedBy);
++        Assert.NotNull(result.DecidedAt);
++    }
++
++    [Fact]
++    public void Approve_DirectorOneCentOverLimit_RefusesAndLeavesInvoiceUnchanged()
++    {
++        var invoice = PendingInvoice("INV-1", 500_000.01m);
++        var service = ServiceFor(invoice);
++
++        var error = Assert.Throws<InvalidOperationException>(() =>
++            service.Approve("INV-1", "demo.director", ApprovalRoles.Director));
++
++        Assert.Equal("Amount exceeds the Director approval limit of 500,000.", error.Message);
++        AssertInvoiceUnchanged(invoice);
++    }
++
++    [Fact]
++    public void Approve_RoleWithoutALimit_RefusesAndLeavesInvoiceUnchanged()
++    {
++        var invoice = PendingInvoice("INV-1", 100m);
++        var service = ServiceFor(invoice);
++
++        var error = Assert.Throws<InvalidOperationException>(() =>
++            service.Approve("INV-1", "demo.approver", "Approver"));
++
++        Assert.Equal("Role 'Approver' cannot approve invoices.", error.Message);
++        AssertInvoiceUnchanged(invoice);
++    }
++
++    private static Invoice PendingInvoice(string id, decimal amount) =>
++        new() { Id = id, CustomerName = "Test School", Amount = amount, Status = InvoiceStatus.PendingApproval };
++
++    private static void AssertInvoiceUnchanged(Invoice invoice)
++    {
++        Assert.Equal(InvoiceStatus.PendingApproval, invoice.Status);
++        Assert.Null(invoice.DecidedBy);
++        Assert.Null(invoice.DecidedAt);
++        Assert.Null(invoice.DecisionNote);
++    }
+ }
