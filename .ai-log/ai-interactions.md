@@ -4,13 +4,13 @@
 
 | Metric | Value |
 | --- | --- |
-| Total interactions | 38 |
-| Outcome | success=5, partial=0, rework=0 |
-| Mode | agent=38 |
-| Skills used | none |
-| Sub-agents used | explore |
-| MCP tools used | none |
-| Human interventions | 5 |
+| Total interactions | 173 |
+| Outcome | success=6, partial=0, rework=0 |
+| Mode | agent=172, ask=1 |
+| Skills used | review-diff |
+| Sub-agents used | explore, general-purpose |
+| MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_snapshot |
+| Human interventions | 6 |
 
 ## Chronological
 
@@ -54,6 +54,141 @@
 | 2026-11-01T16:17:22Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\hook-review-reformat.md |  |  |
 | 2026-11-01T16:17:23Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\hook-test-summary.txt |  |  |
 | 2026-11-01T16:17:32Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-01T16:18:10Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-01T16:18:56Z | Cursor | agent |  | $bash = @(   "C:\Program Files\Git\bin\bash.exe",   "C:\Program Files\Git\usr\bi | shell |  |  |  |
+| 2026-11-01T16:19:35Z | Cursor | agent |  | git add -- .gitignore .cursor/hooks.json .cursor/hooks scripts .ai-log docs/evid | shell |  |  |  |
+| 2026-11-01T16:19:51Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.gitignore |  |  |
+| 2026-11-01T16:20:23Z | Cursor | agent |  | git rm -r --cached -- ".cursor/hooks/__pycache__" "scripts/__pycache__" if (Test | shell |  |  |  |
+| 2026-11-01T16:20:35Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T16:20:45Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T16:20:59Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:01:07Z | Cursor | agent |  | @task/07-agents-md-and-context-experiment.md  implement this  |  |  |  |  |
+| 2026-11-01T17:02:03Z | explore | agent |  | Workspace: c:\My Files\ai-sdlc-demo-app  You are in read-only Ask mode. Do not c |  |  |  |  |
+| 2026-11-01T17:02:14Z | Cursor | ask | setup | @task/20-demo-video.md create a detailed docs for demo video with all the instru |  |  |  | success |
+| 2026-11-01T17:02:27Z | explore | agent |  | Workspace: c:\My Files\ai-sdlc-demo-app  You are in read-only Ask mode. Do not c |  |  |  |  |
+| 2026-11-01T17:03:19Z | Cursor | agent |  | Get-ChildItem -Force e2e \| Select-Object Name, Mode; if (Test-Path e2e/tests) {  | shell |  |  |  |
+| 2026-11-01T17:03:23Z | Cursor | agent |  | Get-ChildItem -Name task; Get-ChildItem -Recurse -Name -Depth 2 .cursor, .github | shell |  |  |  |
+| 2026-11-01T17:03:47Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\rules\layering.mdc |  |  |
+| 2026-11-01T17:03:47Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\AGENTS.md |  |  |
+| 2026-11-01T17:03:55Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\repo-map-ask-mode.md |  |  |
+| 2026-11-01T17:03:58Z | Cursor | agent |  | Get-ChildItem -Recurse -Name .cursor\agents, .cursor\skills, .cursor\commands, . | shell |  |  |  |
+| 2026-11-01T17:04:34Z | Cursor | agent |  | python scripts/annotate.py --ref latest --mode ask --stage setup --outcome succe | shell |  |  |  |
+| 2026-11-01T17:05:36Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\demo-video.md |  |  |
+| 2026-11-01T17:05:36Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\task\20-demo-video.md |  |  |
+| 2026-11-01T17:05:46Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:05:57Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:10:50Z | Cursor | agent |  | Move-Item -Force AGENTS.md ..\AGENTS.md.off Move-Item -Force CLAUDE.md ..\CLAUDE | shell |  |  |  |
+| 2026-11-01T17:10:55Z | general-purpose | agent |  | Add approval limits by role: Manager up to 50,000, Director up to 500,000.  Repo |  |  |  |  |
+| 2026-11-01T17:13:13Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalRoles.cs |  |  |
+| 2026-11-01T17:13:14Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T17:13:16Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T17:13:18Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T17:13:18Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\Controllers\ApprovalsController.cs |  |  |
+| 2026-11-01T17:13:20Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\appsettings.json |  |  |
+| 2026-11-01T17:13:20Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\InMemoryInvoiceRepository.cs |  |  |
+| 2026-11-01T17:13:20Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\Controllers\ApprovalsController.cs |  |  |
+| 2026-11-01T17:13:21Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\README.md |  |  |
+| 2026-11-01T17:13:22Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\InMemoryInvoiceRepository.cs |  |  |
+| 2026-11-01T17:13:23Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\README.md |  |  |
+| 2026-11-01T17:13:32Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:13:34Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:13:35Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:13:37Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:14:13Z | Cursor | agent |  |  | shell |  | 16/0 |  |
+| 2026-11-01T17:15:32Z | Cursor | agent |  | dotnet build backend/src/InvoiceApp.Api/InvoiceApp.Api.csproj --nologo | shell |  |  |  |
+| 2026-11-01T17:16:16Z | Cursor | agent |  |  | browser_navigate |  |  |  |
+| 2026-11-01T17:16:21Z | Cursor | agent |  |  | browser_lock |  |  |  |
+| 2026-11-01T17:16:27Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-01T17:17:25Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-01T17:17:29Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:17:40Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:17:45Z | Cursor | agent |  |  | browser_snapshot |  |  |  |
+| 2026-11-01T17:17:53Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:17:57Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:18:02Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:18:07Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:18:14Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:18:22Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:18:27Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:18:27Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-01T17:18:34Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-01T17:18:39Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:18:43Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:18:49Z | Cursor | agent |  |  | browser_snapshot |  |  |  |
+| 2026-11-01T17:18:54Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:18:58Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:19:05Z | Cursor | agent |  |  | browser_snapshot |  |  |  |
+| 2026-11-01T17:19:09Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:19:13Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-01T17:19:14Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-01T17:19:20Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:19:24Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:19:27Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:19:33Z | Cursor | agent |  |  | browser_snapshot |  |  |  |
+| 2026-11-01T17:19:36Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:19:40Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:19:45Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:19:49Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:19:54Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:20:05Z | Cursor | agent |  |  | browser_lock |  |  |  |
+| 2026-11-01T17:20:16Z | general-purpose | agent |  | Add approval limits by role: Manager up to 50,000, Director up to 500,000.  Repo |  |  |  |  |
+| 2026-11-01T17:20:25Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:20:31Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:21:01Z | Cursor | agent |  | git status -sb | shell |  |  |  |
+| 2026-11-01T17:21:56Z | Cursor | agent |  |  | shell |  | 16/0 |  |
+| 2026-11-01T17:22:32Z | Cursor | agent |  | Move-Item -Force ..\AGENTS.md.off AGENTS.md Move-Item -Force ..\CLAUDE.md.off CL | shell |  |  |  |
+| 2026-11-01T17:22:35Z | general-purpose | agent |  | Add approval limits by role: Manager up to 50,000, Director up to 500,000.  Repo |  |  |  |  |
+| 2026-11-01T17:27:15Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalRefusedException.cs |  |  |
+| 2026-11-01T17:27:15Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalRoles.cs |  |  |
+| 2026-11-01T17:27:15Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalLimits.cs |  |  |
+| 2026-11-01T17:27:15Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\Approver.cs |  |  |
+| 2026-11-01T17:27:16Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\Invoice.cs |  |  |
+| 2026-11-01T17:27:23Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-01T17:27:23Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\Controllers\ApprovalsController.cs |  |  |
+| 2026-11-01T17:27:25Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\Controllers\ApprovalsController.cs |  |  |
+| 2026-11-01T17:27:25Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\appsettings.json |  |  |
+| 2026-11-01T17:27:26Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\wwwroot\app.js |  |  |
+| 2026-11-01T17:27:27Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\README.md |  |  |
+| 2026-11-01T17:27:28Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\README.md |  |  |
+| 2026-11-01T17:27:36Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:27:37Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:27:39Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:27:49Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:28:00Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:28:02Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:28:03Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:28:05Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:28:06Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:28:08Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:28:09Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-01T17:28:47Z | Cursor | agent |  |  | shell |  | 31/0 |  |
+| 2026-11-01T17:29:58Z | Cursor | agent |  | dotnet build backend/src/InvoiceApp.Api/InvoiceApp.Api.csproj --nologo | shell |  |  |  |
+| 2026-11-01T17:30:19Z | Cursor | agent |  |  | browser_navigate |  |  |  |
+| 2026-11-01T17:30:26Z | Cursor | agent |  |  | browser_lock |  |  |  |
+| 2026-11-01T17:30:32Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-01T17:30:54Z | Cursor | agent |  | $ErrorActionPreference = 'Stop' $base = 'http://localhost:5000' function Login($ | shell |  |  |  |
+| 2026-11-01T17:31:36Z | Cursor | agent |  | $ErrorActionPreference = 'Stop' $base = 'http://localhost:5000' function Login([ | shell |  |  |  |
+| 2026-11-01T17:32:19Z | Cursor | agent |  | $login = curl.exe -s -X POST "http://localhost:5000/api/auth/login" -H "Content- | shell |  |  |  |
+| 2026-11-01T17:32:58Z | Cursor | agent |  | $login = curl.exe -s -X POST "http://localhost:5000/api/auth/login" -H "Content- | shell |  |  |  |
+| 2026-11-01T17:33:05Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:33:09Z | Cursor | agent |  |  | browser_navigate |  |  |  |
+| 2026-11-01T17:33:16Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-01T17:34:06Z | Cursor | agent |  | $login = curl.exe -s -X POST "http://localhost:5000/api/auth/login" -H "Content- | shell |  |  |  |
+| 2026-11-01T17:34:10Z | Cursor | agent |  |  | browser_navigate |  |  |  |
+| 2026-11-01T17:34:19Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-01T17:34:59Z | Cursor | agent |  | curl.exe -s "http://localhost:5000/app.js" \| Select-String -Pattern "Approved so | shell |  |  |  |
+| 2026-11-01T17:37:04Z | Cursor | agent |  | @task/08-skills.md implement this  |  |  |  |  |
+| 2026-11-01T17:37:44Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\skills\spec-to-tasks\SKILL.md |  |  |
+| 2026-11-01T17:37:46Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\skills\write-approval-tests\SKILL.md |  |  |
+| 2026-11-01T17:37:48Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\skills\review-diff\SKILL.md |  |  |
+| 2026-11-01T17:37:56Z | general-purpose | agent |  | Review the last commit (`git show HEAD`) for problems.  Repository: c:\My Files\ |  |  |  |  |
+| 2026-11-01T17:38:33Z | Cursor | agent |  | git show HEAD --stat && git log -1 --format=full | shell |  |  |  |
+| 2026-11-01T17:39:08Z | Cursor | agent |  | git show HEAD --format="" | shell |  |  |  |
+| 2026-11-01T17:39:15Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:40:40Z | Cursor | agent |  | git log --oneline -20; git ls-files .cursor/skills appsettings.json backend/src/ | shell |  |  |  |
+| 2026-11-01T17:41:28Z | Cursor | agent |  | git show HEAD:backend/src/InvoiceApp.Domain/ApprovalService.cs | shell |  |  |  |
+| 2026-11-01T17:43:31Z | general-purpose | agent |  | Review the last commit (`git show HEAD`) for problems.  Repository: c:\My Files\ |  |  |  |  |
+| 2026-11-01T17:43:40Z | Cursor | agent |  |  |  |  |  |  |
 
 ## Human oversight
 
@@ -85,6 +220,12 @@
 
 - Decision: dotnet test wrote one TESTS line and integer passed and failed counts.
 - Verification: Read .ai-log/test-summary.txt after dotnet test backend/InvoiceApp.sln
+- Limitation: none
+
+### 20261101T170214Z-prompt
+
+- Decision: Verified repo map against the code. It missed empty e2e/tests and e2e/pages, and labeled ApprovalService as a services layer even though the file is in Domain.
+- Verification: Opened each cited file
 - Limitation: none
 
 ## Limitations
