@@ -14,6 +14,9 @@ Open http://localhost:5000 and sign in:
 | --- | --- | --- |
 | `demo.approver` | `ChangeMe123!` | Approver |
 | `demo.admin` | `ChangeMe123!` | Admin |
+| `demo.manager` | `ChangeMe123!` | Manager |
+| `demo.director` | `ChangeMe123!` | Director |
+| `demo.director2` | `ChangeMe123!` | Director |
 
 These are demo accounts for a local, in-memory app. They are not real credentials.
 
@@ -21,7 +24,7 @@ These are demo accounts for a local, in-memory app. They are not real credential
 
 1. Create an invoice (it starts as a draft).
 2. Submit it for approval.
-3. An approver approves it, or rejects it with a reason.
+3. A Manager or Director approves it within that role's limit, or anyone who can open Approvals rejects it with a reason. An amount above the Director limit is refused and stays pending. A refused approval leaves the invoice pending.
 
 Invoices move through Draft, Pending Approval, then Approved or Rejected.
 

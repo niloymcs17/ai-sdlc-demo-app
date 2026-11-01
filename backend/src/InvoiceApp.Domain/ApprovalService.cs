@@ -1,8 +1,8 @@
 namespace InvoiceApp.Domain;
 
 /// <summary>
-/// Moves an invoice through its lifecycle: Draft -> PendingApproval -> Approved or Rejected.
-/// One invoice at a time, decided as a whole by a single approver.
+/// Moves an invoice through Draft, PendingApproval, Approved, or Rejected.
+/// A single Manager or Director decides the invoice. Every check finishes before the invoice changes.
 /// </summary>
 public class ApprovalService
 {
@@ -28,13 +28,19 @@ public class ApprovalService
         return invoice;
     }
 
-    public Invoice Approve(string invoiceId, string approver)
+    public Invoice Approve(string invoiceId, Approver approver)
     {
+        if (approver is null || string.IsNullOrWhiteSpace(approver.UserId))
+        {
+            throw new ArgumentException("An approver with a user id is required.", nameof(approver));
+        }
+
         var invoice = Find(invoiceId);
         EnsurePending(invoice);
+        EnsureCanApprove(invoice, approver);
 
         invoice.Status = InvoiceStatus.Approved;
-        invoice.DecidedBy = approver;
+        invoice.DecidedBy = approver.UserId;
         invoice.DecidedAt = DateTime.UtcNow;
         _repository.Update(invoice);
         return invoice;
@@ -57,6 +63,43 @@ public class ApprovalService
         _repository.Update(invoice);
         return invoice;
     }
+
+    private static void EnsureCanApprove(Invoice invoice, Approver approver)
+    {
+        if (invoice.Amount <= 0)
+        {
+            throw new ApprovalRefusedException(
+                ApprovalRefusedException.AmountNotPositiveCode,
+                ApprovalRefusedException.AmountNotPositiveMessage);
+        }
+
+        if (!IsManager(approver) && !IsDirector(approver))
+        {
+            throw new ApprovalRefusedException(
+                ApprovalRefusedException.RoleNotPermittedCode,
+                ApprovalRefusedException.RoleNotPermittedMessage);
+        }
+
+        if (invoice.Amount > ApprovalLimits.DirectorLimit)
+        {
+            throw new ApprovalRefusedException(
+                ApprovalRefusedException.RequiresTwoApproversCode,
+                ApprovalRefusedException.RequiresTwoApproversMessage);
+        }
+
+        if (IsManager(approver) && invoice.Amount > ApprovalLimits.ManagerLimit)
+        {
+            throw new ApprovalRefusedException(
+                ApprovalRefusedException.ExceedsManagerLimitCode,
+                ApprovalRefusedException.ExceedsManagerLimitMessage);
+        }
+    }
+
+    private static bool IsManager(Approver approver) =>
+        string.Equals(approver.Role, Roles.Manager, StringComparison.Ordinal);
+
+    private static bool IsDirector(Approver approver) =>
+        string.Equals(approver.Role, Roles.Director, StringComparison.Ordinal);
 
     private Invoice Find(string invoiceId) =>
         _repository.GetById(invoiceId)

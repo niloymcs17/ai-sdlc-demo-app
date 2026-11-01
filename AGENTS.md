@@ -73,7 +73,9 @@ Boundaries are inclusive: 50,000 and 500,000 are allowed for the stated role. Mo
 
 - `demo.approver` / `ChangeMe123!` (role Approver)
 - `demo.admin` / `ChangeMe123!` (role Admin)
-- `demo.manager` (Manager), `demo.director` and `demo.director2` (Director), same demo password, once Phase 1 adds them
+- `demo.manager` / `ChangeMe123!` (role Manager)
+- `demo.director` / `ChangeMe123!` (role Director)
+- `demo.director2` / `ChangeMe123!` (role Director)
 
 ## Working agreements
 
