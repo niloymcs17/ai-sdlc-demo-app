@@ -4,13 +4,13 @@
 
 | Metric | Value |
 | --- | --- |
-| Total interactions | 217 |
-| Outcome | success=6, partial=1, rework=0 |
-| Mode | agent=216, ask=1 |
+| Total interactions | 246 |
+| Outcome | success=9, partial=1, rework=1 |
+| Mode | agent=241, ask=1, plan=4 |
 | Skills used | openspec-propose, review-diff, spec-to-tasks |
 | Sub-agents used | explore, general-purpose, spec-agent, unknown |
 | MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_snapshot |
-| Human interventions | 7 |
+| Human interventions | 11 |
 
 ## Chronological
 
@@ -210,7 +210,7 @@
 | 2026-11-01T17:49:07Z | Cursor | agent |  | python scripts/render_log.py git add -- .cursor/agents .cursor/commands AGENTS.m | shell |  |  |  |
 | 2026-11-01T17:49:12Z | Cursor | agent |  |  |  |  |  |  |
 | 2026-11-01T17:49:20Z | Cursor | agent |  |  |  |  |  |  |
-| 2026-11-01T17:49:38Z | Cursor | agent |  | @task/10-spec-driven-specification.md implement this  |  |  |  |  |
+| 2026-11-01T17:49:38Z | spec-agent | plan | spec | @task/10-spec-driven-specification.md implement this  |  |  |  | rework |
 | 2026-11-01T17:49:44Z | Cursor | agent |  |  |  |  |  |  |
 | 2026-11-01T17:50:22Z | Cursor | agent |  | when can i commit  |  |  |  |  |
 | 2026-11-01T17:50:25Z | spec-agent | agent |  | Implement Task 10 in full at workspace `c:\My Files\ai-sdlc-demo-app`. The brief |  |  |  |  |
@@ -233,6 +233,35 @@
 | 2026-11-01T17:54:23Z | Cursor | agent |  | git log -8 --oneline | shell |  |  |  |
 | 2026-11-01T17:54:41Z | Cursor | agent |  |  |  |  |  |  |
 | 2026-11-01T17:54:46Z | Cursor | agent |  | $env:OPENSPEC_TELEMETRY='0'; openspec context --json; openspec new change "add-a | shell |  |  |  |
+| 2026-11-01T17:55:23Z | Cursor | agent |  | $env:OPENSPEC_TELEMETRY='0'; openspec status --change "add-approval-limits-by-ro | shell |  |  |  |
+| 2026-11-01T17:55:27Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:55:33Z | Cursor | agent |  | python scripts/render_log.py git add -- .ai-log docs/evidence/repo-map-ask-mode. | shell |  |  |  |
+| 2026-11-01T17:55:37Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:55:44Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:56:07Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:56:16Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:57:10Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\proposal.md |  |  |
+| 2026-11-01T17:57:13Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\specs\approval-limits\spec.md |  |  |
+| 2026-11-01T17:57:15Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\design.md |  |  |
+| 2026-11-01T17:57:16Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\tasks.md |  |  |
+| 2026-11-01T17:58:16Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\proposal.md |  |  |
+| 2026-11-01T17:58:40Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\specs\approval-limits\spec.md |  |  |
+| 2026-11-01T17:58:54Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\design.md |  |  |
+| 2026-11-01T17:59:04Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\tasks.md |  |  |
+| 2026-11-01T17:59:42Z | Cursor | agent |  | $env:OPENSPEC_TELEMETRY='0'; openspec validate add-approval-limits-by-role --str | shell |  |  |  |
+| 2026-11-01T18:00:01Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\specs\approval-limits\spec.md |  |  |
+| 2026-11-01T18:00:28Z | spec-agent | plan | spec |  |  | openspec/changes/add-approval-limits-by-role |  | success |
+| 2026-11-01T18:00:44Z | Cursor | agent |  | $env:OPENSPEC_TELEMETRY='0'; openspec validate add-approval-limits-by-role --str | shell |  |  |  |
+| 2026-11-01T18:01:18Z | spec-agent | plan | spec | Human decision D7 (E9): A Manager MAY be the first approver on an amount above t |  |  |  | success |
+| 2026-11-01T18:01:18Z | spec-agent | plan | spec | Human decision D8 (E10): A zero or negative amount is refused because the amount |  |  |  | success |
+| 2026-11-01T18:01:23Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:01:47Z | Cursor | agent |  | python scripts/annotate.py --ref "20261101T174938Z-prompt" --mode plan --stage s | shell |  |  |  |
+| 2026-11-01T18:02:26Z | Cursor | agent |  | git status --short; git log -5 --oneline | shell |  |  |  |
+| 2026-11-01T18:02:30Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:03:06Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:03:12Z | Cursor | agent |  | git status --short --untracked-files=all -- openspec .cursor .ai-log; git check- | shell |  |  |  |
+| 2026-11-01T18:03:52Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:03:55Z | Cursor | agent |  | git ls-files openspec; Write-Output '---ignored---'; git status --short --ignore | shell |  |  |  |
 
 ## Human oversight
 
@@ -276,6 +305,30 @@
 
 - Decision: Custom reviewer type could not be started. Hooks recorded an explore sub-agent. That stand-in created test.txt, so read-only was not proven.
 - Verification: JSONL shows explore start and stop; no agent_name reviewer; test.txt was created and then deleted
+- Limitation: none
+
+### 20261101T174938Z-prompt
+
+- Decision: First draft missed E11-E16, the Phase 1/Phase 2 task split, and ApprovalRefusedException deriving from InvalidOperationException; requested revision
+- Verification: Checked against edge-case and decision checklist
+- Limitation: none
+
+### 20261101T180028Z-stop
+
+- Decision: D7: Manager may be first approver above 500k (literal reading of brief); D9: keep PendingApproval + Approvals list; D13: Phase 1 refuses >500k, superseded in Phase 2
+- Verification: openspec validate add-approval-limits-by-role --strict passed
+- Limitation: none
+
+### 20261101T180118Z-manual
+
+- Decision: Human decision D7 (E9): A Manager MAY be the first approver on an amount above the Director limit. The attempt is accepted and the invoice stays PendingApproval with that approval recorded. Reason: the brief constrains only the second approver.
+- Verification: Recorded as a separate human decision for E9
+- Limitation: none
+
+### 20261101T180118Z-manual
+
+- Decision: Human decision D8 (E10): A zero or negative amount is refused because the amount must be greater than zero. Message: Invoice amount must be greater than zero. Reason: defence in depth at approval time.
+- Verification: Recorded as a separate human decision for E10
 - Limitation: none
 
 ## Limitations
