@@ -1,0 +1,20 @@
+#!/bin/sh
+# Fails when a commit message has no body after a blank line.
+# Git for Windows runs this via sh. The message file is $1.
+python - "$1" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8", errors="replace")
+lines = [line for line in text.splitlines() if not line.startswith("#")]
+while lines and not lines[-1].strip():
+    lines.pop()
+blank_at = next((i for i, line in enumerate(lines) if not line.strip()), None)
+body = ""
+if blank_at is not None:
+    body = "\n".join(lines[blank_at + 1 :]).strip()
+if len(body) < 20:
+    sys.stderr.write("Commit blocked: message needs a body explaining WHY.\n")
+    sys.exit(1)
+PY

@@ -1,0 +1,29 @@
+Hook: check_commit_msg.py
+Event: beforeShellExecution
+Command: .cursor/hooks.json -> python .cursor/hooks/check_commit_msg.py
+
+Trigger
+-------
+Stage .gitignore and commit it with one subject and no body:
+
+  git add -- .gitignore
+  git commit -m "wip"
+
+Live result (this Agent chat, Cursor blocked the shell before git ran)
+-----------------------------------------------------------------------
+Command execution was blocked by a hook: Commit blocked: message needs a body explaining WHY.
+
+Hook stdout for the same command
+---------------------------------
+{"permission": "deny", "user_message": "Commit blocked: message needs a body explaining WHY.", "agent_message": "Add a second -m with the reason for the change (at least 20 characters), then retry."}
+
+Other checks run against the same script
+-----------------------------------------
+- git commit -m "chore: hooks" -m "too short" -> deny (second -m is under 20 characters)
+- git commit -m "chore: add hooks" -m "Why: the assignment is graded on an evidence trail." -> allow
+- git commit --amend --no-edit -> allow
+- git commit -F <file> with a blank line and a body of at least 20 characters -> allow
+- git commit -F <file> with only a subject -> deny
+- stdin that is not JSON -> allow (internal errors do not deny)
+
+Nothing was staged. The blocked command never reached git, so there was nothing to unstage.

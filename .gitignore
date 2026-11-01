@@ -8,3 +8,9 @@ node_modules/
 .env
 test-results/
 playwright-report/
+task/
+# AI tooling
+.ai-log/payloads/
+.ai-log/test-summary.txt
+# Stryker
+**/StrykerOutput/

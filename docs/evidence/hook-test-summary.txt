@@ -1,0 +1,24 @@
+Hook: log_event.py (shell branch)
+Event: afterShellExecution
+Command: python .cursor/hooks/log_event.py shell
+
+Trigger
+-------
+dotnet test backend/InvoiceApp.sln --nologo
+
+Test runner line
+----------------
+Passed!  - Failed:     0, Passed:     7, Skipped:     0, Total:     7, Duration: 3 ms - InvoiceApp.Tests.dll (net8.0)
+
+.ai-log/test-summary.txt
+------------------------
+TESTS: passed=7 failed=0 skipped=0 total=7 commit=66cb3f9
+
+JSONL tests_run (passed and failed are integers)
+-------------------------------------------------
+"tests_run": {"command": "dotnet test backend/InvoiceApp.sln --nologo", "exit_code": null, "passed": 7, "failed": 0}
+
+Extra matchers (sample output, not a live Stryker or Playwright run)
+---------------------------------------------------------------------
+dotnet stryker + "The final mutation score is 61.54 %" -> MUTATION: score=61.54 commit=<sha>
+playwright "4 passed" / "1 failed" -> TESTS: passed=4 failed=1 skipped=0 total=5 commit=<sha>

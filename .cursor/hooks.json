@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeSubmitPrompt":  [{ "command": "python .cursor/hooks/log_event.py prompt" }],
+    "beforeReadFile":      [{ "command": "python .cursor/hooks/log_event.py read" }],
+    "afterFileEdit":       [{ "command": "python .cursor/hooks/log_event.py edit" }],
+    "beforeShellExecution": [{ "command": "python .cursor/hooks/check_commit_msg.py" }],
+    "afterShellExecution": [{ "command": "python .cursor/hooks/log_event.py shell" }],
+    "afterMCPExecution":   [{ "command": "python .cursor/hooks/log_event.py mcp" }],
+    "subagentStart":       [{ "command": "python .cursor/hooks/log_event.py subagent_start" }],
+    "subagentStop":        [{ "command": "python .cursor/hooks/log_event.py subagent_stop" }],
+    "stop": [
+      { "command": "python .cursor/hooks/log_event.py stop" },
+      { "command": "python .cursor/hooks/validate_review.py" }
+    ]
+  }
+}
