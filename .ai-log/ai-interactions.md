@@ -4,13 +4,13 @@
 
 | Metric | Value |
 | --- | --- |
-| Total interactions | 173 |
-| Outcome | success=6, partial=0, rework=0 |
-| Mode | agent=172, ask=1 |
+| Total interactions | 191 |
+| Outcome | success=6, partial=1, rework=0 |
+| Mode | agent=190, ask=1 |
 | Skills used | review-diff |
-| Sub-agents used | explore, general-purpose |
+| Sub-agents used | explore, general-purpose, unknown |
 | MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_snapshot |
-| Human interventions | 6 |
+| Human interventions | 7 |
 
 ## Chronological
 
@@ -189,6 +189,24 @@
 | 2026-11-01T17:41:28Z | Cursor | agent |  | git show HEAD:backend/src/InvoiceApp.Domain/ApprovalService.cs | shell |  |  |  |
 | 2026-11-01T17:43:31Z | general-purpose | agent |  | Review the last commit (`git show HEAD`) for problems.  Repository: c:\My Files\ |  |  |  |  |
 | 2026-11-01T17:43:40Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:44:13Z | Cursor | agent |  | python scripts/render_log.py git add -- .cursor/skills .ai-log git diff --cached | shell |  |  |  |
+| 2026-11-01T17:44:21Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:44:29Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T17:44:44Z | reviewer | agent | setup | @task/09-subagents-and-commands.md  implement this  |  |  |  | partial |
+| 2026-11-01T17:46:59Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\agents\spec-agent.md |  |  |
+| 2026-11-01T17:47:01Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\agents\implementer.md |  |  |
+| 2026-11-01T17:47:02Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\agents\test-writer.md |  |  |
+| 2026-11-01T17:47:02Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\agents\reviewer.md |  |  |
+| 2026-11-01T17:47:04Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\commands\review-pr.md |  |  |
+| 2026-11-01T17:47:04Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\commands\implement-task.md |  |  |
+| 2026-11-01T17:47:04Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\.cursor\commands\write-tests.md |  |  |
+| 2026-11-01T17:47:07Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\AGENTS.md |  |  |
+| 2026-11-01T17:47:15Z | unknown | agent |  |  |  |  |  |  |
+| 2026-11-01T17:47:28Z | explore | agent |  | You are running the reviewer role from c:\My Files\ai-sdlc-demo-app\.cursor\agen |  |  |  |  |
+| 2026-11-01T17:47:31Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\test.txt |  |  |
+| 2026-11-01T17:47:37Z | explore | agent |  | You are running the reviewer role from c:\My Files\ai-sdlc-demo-app\.cursor\agen |  |  |  |  |
+| 2026-11-01T17:47:55Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\reviewer-readonly.md |  |  |
+| 2026-11-01T17:48:29Z | Cursor | agent |  | if (Test-Path test.txt) { Remove-Item -Force test.txt; "removed test.txt" } else | shell |  |  |  |
 
 ## Human oversight
 
@@ -226,6 +244,12 @@
 
 - Decision: Verified repo map against the code. It missed empty e2e/tests and e2e/pages, and labeled ApprovalService as a services layer even though the file is in Domain.
 - Verification: Opened each cited file
+- Limitation: none
+
+### 20261101T174444Z-prompt
+
+- Decision: Custom reviewer type could not be started. Hooks recorded an explore sub-agent. That stand-in created test.txt, so read-only was not proven.
+- Verification: JSONL shows explore start and stop; no agent_name reviewer; test.txt was created and then deleted
 - Limitation: none
 
 ## Limitations

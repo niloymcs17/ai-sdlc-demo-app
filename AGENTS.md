@@ -105,11 +105,9 @@ Output findings with the review table: `| # | Finding | Severity | Location | Su
 
 ## Agents, skills and commands
 
-Placeholders until tasks 08 and 09 add them:
-
-- Agents: spec-agent, implementer, test-writer, reviewer (`.cursor/agents/`).
-- Skills: write-approval-tests, review-diff, spec-to-tasks (`.cursor/skills/`).
-- Commands: /review-pr (`.cursor/commands/`).
+- Agents: `spec-agent` (`.cursor/agents/spec-agent.md`, edits `openspec/**` only), `implementer` (`.cursor/agents/implementer.md`, edits `backend/src/**` only), `test-writer` (`.cursor/agents/test-writer.md`, edits `backend/tests/**` and `e2e/**` only), `reviewer` (`.cursor/agents/reviewer.md`, `readonly: true`).
+- Skills: `spec-to-tasks` (`.cursor/skills/spec-to-tasks/SKILL.md`), `write-approval-tests` (`.cursor/skills/write-approval-tests/SKILL.md`), `review-diff` (`.cursor/skills/review-diff/SKILL.md`).
+- Commands: `/review-pr` (`.cursor/commands/review-pr.md`), `/implement-task` (`.cursor/commands/implement-task.md`), `/write-tests` (`.cursor/commands/write-tests.md`). Cursor passes the task ID as `$ARGUMENTS`.
 
 ## Never
 
