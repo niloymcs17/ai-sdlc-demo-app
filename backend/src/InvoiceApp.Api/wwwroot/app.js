@@ -52,11 +52,16 @@
         submit.addEventListener('click', async () => { await api(`/invoices/${invoice.id}/submit`, { method: 'POST' }); refresh(); });
         actions.append(submit);
       }
+      const approvals = invoice.approvals;
+      const approvalsText = !approvals || approvals.length === 0
+        ? 'None'
+        : approvals.map((record) => `${record.userId} (${record.role})`).join(', ');
       return el('tr', {},
         el('td', {}, invoice.id),
         el('td', {}, invoice.customerName),
         el('td', {}, money.format(invoice.amount)),
         el('td', { class: `status status-${invoice.status}` }, invoice.status.replace(/([a-z])([A-Z])/g, '$1 $2')),
+        el('td', {}, approvalsText),
         actions);
     }));
   }
