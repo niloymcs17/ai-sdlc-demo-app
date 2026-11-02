@@ -1,0 +1,9 @@
+REVIEW-FINDINGS:
+| # | Finding | Severity (high/med/low) | Location (file:line) | Suggested fix | Verdict | Reason |
+|---|---|---|---|---|---|---|
+| 1 | `noApprovalsCell` expects a table cell whose accessible name is exactly `None`. The invoices table headers are ID, Customer, Amount, Status, and Actions, and `renderInvoices` never writes `None` or the approval list. The assertion after reload cannot match the page, so the new end-to-end test fails and does not show that a refusal left approvers empty. | high | e2e/tests/over-limit-approval.spec.ts:21 | Render an Approvers cell (`None` when `approvals` is empty, otherwise the user ids) and keep limit numbers out of `app.js`, or remove this locator and assert an empty `approvals` array from `GET /api/invoices`. | PENDING | PENDING |
+| 2 | `Approve` checks the live invoice, then appends to `Approvals`, after `GetById` has released the repository lock. Overlapping calls can both see `Approvals.Count == 0` and both append. The Approve button stays enabled while `decide` is in flight, so a double-click on an amount above `ApprovalLimits.DirectorLimit` can record the same user twice and set `Approved` when `Count == 2`. Two Managers can finish the same invoice the same way. | high | backend/src/InvoiceApp.Domain/ApprovalService.cs:42 | Hold one lock across the pending check, `EnsureCanApprove`, the append, and `Update`. Ignore further Approve clicks until the request in flight finishes. | PENDING | PENDING |
+
+The reviewer sub-agent also sent this summary before the table. The stop hook did not ask for a reformat; the table already matched the review-diff columns.
+
+> The branch matches the limit, refusal, and same-user checks. Two issues remain: the new end-to-end test looks for an Approvers cell the invoices table never renders, and Approve can apply two overlapping approvals because the check and the update are not one locked step.

@@ -4,13 +4,13 @@
 
 | Metric | Value |
 | --- | --- |
-| Total interactions | 546 |
-| Outcome | success=20, partial=2, rework=1 |
-| Mode | agent=540, ask=1, edit=1, plan=4 |
+| Total interactions | 578 |
+| Outcome | success=20, partial=3, rework=1 |
+| Mode | agent=572, ask=1, edit=1, plan=4 |
 | Skills used | openspec-propose, review-diff, spec-to-tasks, write-approval-tests |
-| Sub-agents used | explore, general-purpose, implementer, spec-agent, test-writer, unknown |
+| Sub-agents used | explore, general-purpose, implementer, reviewer, spec-agent, test-writer, unknown |
 | MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_press_key, cursor-ide-browser/browser_snapshot |
-| Human interventions | 23 |
+| Human interventions | 24 |
 
 ## Chronological
 
@@ -562,6 +562,38 @@
 | 2026-11-02T06:14:24Z | Cursor | agent |  | netstat -ano \| findstr ":5000" | shell |  |  |  |
 | 2026-11-02T06:14:50Z | Cursor | agent |  |  | shell |  | 0/1 |  |
 | 2026-11-02T06:15:30Z | Cursor | agent |  | git checkout -- backend/src; git diff -- backend/src/InvoiceApp.Domain/ApprovalL | shell |  |  |  |
+| 2026-11-02T06:16:43Z | Cursor | agent |  | python scripts/render_log.py | shell |  |  |  |
+| 2026-11-02T06:17:17Z | Cursor | agent |  | git status --short | shell |  |  |  |
+| 2026-11-02T06:17:17Z | Cursor | agent |  | git diff --stat && git diff -- e2e docs/evidence/test-review-notes.md | shell |  |  |  |
+| 2026-11-02T06:17:18Z | Cursor | agent |  | git log -8 --oneline | shell |  |  |  |
+| 2026-11-02T06:18:20Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-02T06:19:04Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T06:19:09Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T06:19:42Z | Cursor | agent |  | @task/18-pull-request-and-ai-review.md implement this  |  |  |  |  |
+| 2026-11-02T06:19:46Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T06:20:38Z | Cursor | agent |  | git remote -v; git status -sb; git log --oneline main..HEAD; git rev-parse --abb | shell |  |  |  |
+| 2026-11-02T06:21:50Z | reviewer | agent |  | You are the read-only reviewer. Task 18 /review-pr. Do not edit any files. Do no |  |  |  |  |
+| 2026-11-02T06:21:53Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T06:25:44Z | reviewer | agent |  | You are the read-only reviewer. Task 18 /review-pr. Do not edit any files. Do no |  |  |  |  |
+| 2026-11-02T06:26:47Z | Cursor | agent |  | git status --short -- backend/src/InvoiceApp.Api/wwwroot; git log --oneline -5 - | shell |  |  |  |
+| 2026-11-02T06:27:25Z | implementer | agent |  | Fix review finding #1 only. Repository: c:\My Files\ai-sdlc-demo-app  The invoic |  |  |  |  |
+| 2026-11-02T06:27:47Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\wwwroot\index.html |  |  |
+| 2026-11-02T06:27:48Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\wwwroot\app.js |  |  |
+| 2026-11-02T06:28:26Z | Cursor | agent |  |  | shell |  | 38/0 |  |
+| 2026-11-02T06:29:17Z | implementer | agent |  | Fix review finding #1 only. Repository: c:\My Files\ai-sdlc-demo-app  The invoic |  |  |  |  |
+| 2026-11-02T06:29:21Z | reviewer | agent | review |  |  |  |  | partial |
+| 2026-11-02T06:30:58Z | Cursor | agent |  |  | shell |  | 1/0 |  |
+| 2026-11-02T06:31:37Z | Cursor | agent |  | git diff -- backend/src/InvoiceApp.Api/wwwroot/index.html backend/src/InvoiceApp | shell |  |  |  |
+| 2026-11-02T06:31:39Z | Cursor | agent |  | git log -5 --oneline | shell |  |  |  |
+| 2026-11-02T06:32:18Z | Cursor | agent |  | git add -- backend/src/InvoiceApp.Api/wwwroot/app.js backend/src/InvoiceApp.Api/ | shell |  |  |  |
+| 2026-11-02T06:32:35Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\ai-review-raw.md |  |  |
+| 2026-11-02T06:32:38Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\review\deferred-concurrency.md |  |  |
+| 2026-11-02T06:32:44Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\review\review-verdicts.md |  |  |
+| 2026-11-02T06:32:51Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\review\pr-description.md |  |  |
+| 2026-11-02T06:33:37Z | Cursor | agent |  | gh issue create --repo niloymcs17/ai-sdlc-demo-app --title "Concurrent approvals | shell |  |  |  |
+| 2026-11-02T06:33:44Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\review\review-verdicts.md |  |  |
+| 2026-11-02T06:33:44Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\review\pr-description.md |  |  |
+| 2026-11-02T06:34:25Z | Cursor | agent |  | python scripts/annotate.py --ref latest --mode agent --stage review --agent revi | shell |  |  |  |
 
 ## Human oversight
 
@@ -701,6 +733,12 @@
 
 - Decision: Deleted the weaker draft-approve duplicate. Failure paths now assert Update was not called. Non-pending approve snapshots decision fields and approvals. D16 records null and blank user id as ArgumentException.
 - Verification: dotnet test backend/InvoiceApp.sln: 38 passed, 0 failed. Saved to docs/evidence/after-review-test-run.txt.
+- Limitation: none
+
+### 20261102T062921Z-stop
+
+- Decision: Fixed F1 (2df75f7); deferred F2 (docs/review/deferred-concurrency.md). gh is not logged in, so no issue number.
+- Verification: Checked each claim against the code
 - Limitation: none
 
 ## Limitations
