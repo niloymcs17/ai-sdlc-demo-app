@@ -97,12 +97,6 @@ public class ApprovalServiceTests
         ApprovalLimits.ManagerLimit + 1m
     };
 
-    public static TheoryData<string> AmountsOverDirectorLimit { get; } = new()
-    {
-        "0.01",
-        "1"
-    };
-
     public static TheoryData<string> NonPositiveAmounts { get; } = new()
     {
         "0",
@@ -151,20 +145,219 @@ public class ApprovalServiceTests
         Assert.NotNull(result.DecidedAt);
     }
 
-    [Theory]
-    [MemberData(nameof(AmountsOverDirectorLimit))]
-    public void Approve_DirectorAboveLimit_RefusesAndLeavesInvoiceUnchanged(string extra)
+    // Supersedes the Phase 1 D13 placeholder, which refused a Director above the Director limit and recorded no approval.
+    [Fact]
+    public void Approve_DirectorAloneAboveDirectorLimit_StaysPendingWithOneRecord()
     {
-        var amount = ApprovalLimits.DirectorLimit + decimal.Parse(extra, CultureInfo.InvariantCulture);
-        var invoice = Pending(amount);
-        var before = Capture(invoice);
+        var invoice = Pending(ApprovalLimits.DirectorLimit + 0.01m);
+        var service = ServiceFor(invoice);
 
-        var refused = Assert.Throws<ApprovalRefusedException>(() =>
-            ServiceFor(invoice).Approve(invoice.Id, Director()));
+        service.Approve(invoice.Id, Director("director1"));
 
-        Assert.Equal(ApprovalRefusedException.RequiresTwoApproversCode, refused.ReasonCode);
-        Assert.Equal(ApprovalRefusedException.RequiresTwoApproversMessage, refused.Message);
-        AssertUnchanged(before, invoice);
+        Assert.Equal(InvoiceStatus.PendingApproval, invoice.Status);
+        Assert.NotEqual(InvoiceStatus.Approved, invoice.Status);
+        Assert.Equal(1, invoice.Approvals.Count);
+        Assert.Equal("director1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Director, invoice.Approvals[0].Role);
+        Assert.NotEqual(default, invoice.Approvals[0].ApprovedAt);
+        Assert.Null(invoice.DecidedBy);
+        Assert.Null(invoice.DecidedAt);
+    }
+
+    [Fact]
+    public void Approve_TwoDirectorsAboveDirectorLimit_ApprovesWithRecordsInOrder()
+    {
+        var invoice = Pending(ApprovalLimits.DirectorLimit + 0.01m);
+        var service = ServiceFor(invoice);
+
+        service.Approve(invoice.Id, Director("director1"));
+        service.Approve(invoice.Id, Director("director2"));
+
+        Assert.Equal(InvoiceStatus.Approved, invoice.Status);
+        Assert.Equal("director2", invoice.DecidedBy);
+        Assert.NotNull(invoice.DecidedAt);
+        Assert.Equal(2, invoice.Approvals.Count);
+        Assert.Equal("director1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Director, invoice.Approvals[0].Role);
+        Assert.Equal("director2", invoice.Approvals[1].UserId);
+        Assert.Equal(Roles.Director, invoice.Approvals[1].Role);
+    }
+
+    [Fact]
+    public void Approve_SecondApproverIsManager_RefusesAndLeavesApprovalsUnchanged()
+    {
+        var invoice = Pending(ApprovalLimits.DirectorLimit + 0.01m);
+        var service = ServiceFor(invoice);
+
+        service.Approve(invoice.Id, Director("director1"));
+
+        Assert.Equal(1, invoice.Approvals.Count);
+        Assert.Equal("director1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Director, invoice.Approvals[0].Role);
+
+        var statusBefore = invoice.Status;
+        var decidedByBefore = invoice.DecidedBy;
+        var decidedAtBefore = invoice.DecidedAt;
+        var approvalsBefore = invoice.Approvals.ToList();
+
+        var refusal = Assert.Throws<ApprovalRefusedException>(() =>
+            service.Approve(invoice.Id, Manager("manager1")));
+
+        Assert.Equal(ApprovalRefusedException.SecondApproverMustBeDirectorCode, refusal.ReasonCode);
+        Assert.Equal(ApprovalRefusedException.SecondApproverMustBeDirectorMessage, refusal.Message);
+        Assert.Equal(statusBefore, invoice.Status);
+        Assert.Equal(decidedByBefore, invoice.DecidedBy);
+        Assert.Equal(decidedAtBefore, invoice.DecidedAt);
+        Assert.Equal(approvalsBefore, invoice.Approvals);
+        Assert.Equal(InvoiceStatus.PendingApproval, invoice.Status);
+        Assert.Null(invoice.DecidedBy);
+        Assert.Null(invoice.DecidedAt);
+        Assert.Equal(1, invoice.Approvals.Count);
+        Assert.Equal("director1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Director, invoice.Approvals[0].Role);
+    }
+
+    [Fact]
+    public void Approve_SameDirectorApprovesTwice_RefusesAndLeavesOneRecord()
+    {
+        var invoice = Pending(ApprovalLimits.DirectorLimit + 0.01m);
+        var service = ServiceFor(invoice);
+
+        service.Approve(invoice.Id, Director("director1"));
+
+        var statusBefore = invoice.Status;
+        var decidedByBefore = invoice.DecidedBy;
+        var decidedAtBefore = invoice.DecidedAt;
+        var approvalsBefore = invoice.Approvals.ToList();
+
+        var refusal = Assert.Throws<ApprovalRefusedException>(() =>
+            service.Approve(invoice.Id, Director("director1")));
+
+        Assert.Equal(ApprovalRefusedException.SameApproverCode, refusal.ReasonCode);
+        Assert.Equal(ApprovalRefusedException.SameApproverMessage, refusal.Message);
+        Assert.Equal(statusBefore, invoice.Status);
+        Assert.Equal(decidedByBefore, invoice.DecidedBy);
+        Assert.Equal(decidedAtBefore, invoice.DecidedAt);
+        Assert.Equal(approvalsBefore, invoice.Approvals);
+        Assert.Equal(InvoiceStatus.PendingApproval, invoice.Status);
+        Assert.Null(invoice.DecidedBy);
+        Assert.Equal(1, invoice.Approvals.Count);
+        Assert.Equal("director1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Director, invoice.Approvals[0].Role);
+    }
+
+    [Fact]
+    public void Approve_SameUserIdOnDistinctApproverObjects_RefusesAsSameUser()
+    {
+        var invoice = Pending(ApprovalLimits.DirectorLimit + 0.01m);
+        var service = ServiceFor(invoice);
+
+        service.Approve(invoice.Id, new Approver("d1", Roles.Director));
+
+        var statusBefore = invoice.Status;
+        var decidedByBefore = invoice.DecidedBy;
+        var decidedAtBefore = invoice.DecidedAt;
+        var approvalsBefore = invoice.Approvals.ToList();
+
+        var refusal = Assert.Throws<ApprovalRefusedException>(() =>
+            service.Approve(invoice.Id, new Approver("d1", Roles.Director)));
+
+        Assert.Equal(ApprovalRefusedException.SameApproverCode, refusal.ReasonCode);
+        Assert.Equal(ApprovalRefusedException.SameApproverMessage, refusal.Message);
+        Assert.Equal(statusBefore, invoice.Status);
+        Assert.Equal(decidedByBefore, invoice.DecidedBy);
+        Assert.Equal(decidedAtBefore, invoice.DecidedAt);
+        Assert.Equal(approvalsBefore, invoice.Approvals);
+        Assert.Equal(InvoiceStatus.PendingApproval, invoice.Status);
+        Assert.Equal(1, invoice.Approvals.Count);
+        Assert.Equal("d1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Director, invoice.Approvals[0].Role);
+    }
+
+    [Fact]
+    public void Approve_SameManagerApprovesTwice_ReportsSameUserBeforeDirectorCheck()
+    {
+        var invoice = Pending(ApprovalLimits.DirectorLimit + 1m);
+        var service = ServiceFor(invoice);
+
+        service.Approve(invoice.Id, Manager("manager1"));
+
+        var statusBefore = invoice.Status;
+        var decidedByBefore = invoice.DecidedBy;
+        var decidedAtBefore = invoice.DecidedAt;
+        var approvalsBefore = invoice.Approvals.ToList();
+
+        var refusal = Assert.Throws<ApprovalRefusedException>(() =>
+            service.Approve(invoice.Id, new Approver("manager1", Roles.Manager)));
+
+        Assert.Equal(ApprovalRefusedException.SameApproverCode, refusal.ReasonCode);
+        Assert.Equal(ApprovalRefusedException.SameApproverMessage, refusal.Message);
+        Assert.NotEqual(ApprovalRefusedException.SecondApproverMustBeDirectorCode, refusal.ReasonCode);
+        Assert.Equal(statusBefore, invoice.Status);
+        Assert.Equal(decidedByBefore, invoice.DecidedBy);
+        Assert.Equal(decidedAtBefore, invoice.DecidedAt);
+        Assert.Equal(approvalsBefore, invoice.Approvals);
+        Assert.Equal(InvoiceStatus.PendingApproval, invoice.Status);
+        Assert.Null(invoice.DecidedBy);
+        Assert.Equal(1, invoice.Approvals.Count);
+        Assert.Equal("manager1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Manager, invoice.Approvals[0].Role);
+    }
+
+    [Fact]
+    public void Approve_TwoManagersAboveDirectorLimit_RefusesBecauseSecondMustBeDirector()
+    {
+        var invoice = Pending(ApprovalLimits.DirectorLimit + 1m);
+        var service = ServiceFor(invoice);
+
+        service.Approve(invoice.Id, Manager("manager1"));
+
+        var statusBefore = invoice.Status;
+        var decidedByBefore = invoice.DecidedBy;
+        var decidedAtBefore = invoice.DecidedAt;
+        var approvalsBefore = invoice.Approvals.ToList();
+
+        var refusal = Assert.Throws<ApprovalRefusedException>(() =>
+            service.Approve(invoice.Id, Manager("manager2")));
+
+        Assert.Equal(ApprovalRefusedException.SecondApproverMustBeDirectorCode, refusal.ReasonCode);
+        Assert.Equal(ApprovalRefusedException.SecondApproverMustBeDirectorMessage, refusal.Message);
+        Assert.Equal(statusBefore, invoice.Status);
+        Assert.Equal(decidedByBefore, invoice.DecidedBy);
+        Assert.Equal(decidedAtBefore, invoice.DecidedAt);
+        Assert.Equal(approvalsBefore, invoice.Approvals);
+        Assert.Equal(InvoiceStatus.PendingApproval, invoice.Status);
+        Assert.Null(invoice.DecidedBy);
+        Assert.Equal(1, invoice.Approvals.Count);
+        Assert.Equal("manager1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Manager, invoice.Approvals[0].Role);
+    }
+
+    [Fact]
+    public void Approve_ManagerFirstThenDirectorAboveDirectorLimit_ApprovesOnSecond()
+    {
+        var invoice = Pending(ApprovalLimits.DirectorLimit + 1m);
+        var service = ServiceFor(invoice);
+
+        service.Approve(invoice.Id, Manager("manager1"));
+
+        Assert.Equal(InvoiceStatus.PendingApproval, invoice.Status);
+        Assert.Equal(1, invoice.Approvals.Count);
+        Assert.Equal("manager1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Manager, invoice.Approvals[0].Role);
+        Assert.Null(invoice.DecidedBy);
+        Assert.Null(invoice.DecidedAt);
+
+        service.Approve(invoice.Id, Director("director1"));
+
+        Assert.Equal(InvoiceStatus.Approved, invoice.Status);
+        Assert.Equal("director1", invoice.DecidedBy);
+        Assert.NotNull(invoice.DecidedAt);
+        Assert.Equal(2, invoice.Approvals.Count);
+        Assert.Equal("manager1", invoice.Approvals[0].UserId);
+        Assert.Equal(Roles.Manager, invoice.Approvals[0].Role);
+        Assert.Equal("director1", invoice.Approvals[1].UserId);
+        Assert.Equal(Roles.Director, invoice.Approvals[1].Role);
     }
 
     [Theory]

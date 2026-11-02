@@ -2,7 +2,9 @@ namespace InvoiceApp.Domain;
 
 /// <summary>
 /// Moves an invoice through Draft, PendingApproval, Approved, or Rejected.
-/// A single Manager or Director decides the invoice. Every check finishes before the invoice changes.
+/// A single Manager or Director decides invoices at or under the Director limit.
+/// Amounts above the Director limit stay pending after the first approval and need a second, distinct Director.
+/// Every check finishes before the invoice changes.
 /// </summary>
 public class ApprovalService
 {
@@ -39,9 +41,15 @@ public class ApprovalService
         EnsurePending(invoice);
         EnsureCanApprove(invoice, approver);
 
-        invoice.Status = InvoiceStatus.Approved;
-        invoice.DecidedBy = approver.UserId;
-        invoice.DecidedAt = DateTime.UtcNow;
+        var approvedAt = DateTime.UtcNow;
+        invoice.Approvals.Add(new ApprovalRecord(approver.UserId, approver.Role, approvedAt));
+        if (invoice.Amount <= ApprovalLimits.DirectorLimit || invoice.Approvals.Count == 2)
+        {
+            invoice.Status = InvoiceStatus.Approved;
+            invoice.DecidedBy = approver.UserId;
+            invoice.DecidedAt = approvedAt;
+        }
+
         _repository.Update(invoice);
         return invoice;
     }
@@ -80,18 +88,38 @@ public class ApprovalService
                 ApprovalRefusedException.RoleNotPermittedMessage);
         }
 
-        if (invoice.Amount > ApprovalLimits.DirectorLimit)
+        if (invoice.Amount <= ApprovalLimits.DirectorLimit)
         {
-            throw new ApprovalRefusedException(
-                ApprovalRefusedException.RequiresTwoApproversCode,
-                ApprovalRefusedException.RequiresTwoApproversMessage);
+            if (IsManager(approver) && invoice.Amount > ApprovalLimits.ManagerLimit)
+            {
+                throw new ApprovalRefusedException(
+                    ApprovalRefusedException.ExceedsManagerLimitCode,
+                    ApprovalRefusedException.ExceedsManagerLimitMessage);
+            }
+
+            return;
         }
 
-        if (IsManager(approver) && invoice.Amount > ApprovalLimits.ManagerLimit)
+        if (invoice.Approvals.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var record in invoice.Approvals)
+        {
+            if (string.Equals(record.UserId, approver.UserId, StringComparison.Ordinal))
+            {
+                throw new ApprovalRefusedException(
+                    ApprovalRefusedException.SameApproverCode,
+                    ApprovalRefusedException.SameApproverMessage);
+            }
+        }
+
+        if (!IsDirector(approver))
         {
             throw new ApprovalRefusedException(
-                ApprovalRefusedException.ExceedsManagerLimitCode,
-                ApprovalRefusedException.ExceedsManagerLimitMessage);
+                ApprovalRefusedException.SecondApproverMustBeDirectorCode,
+                ApprovalRefusedException.SecondApproverMustBeDirectorMessage);
         }
     }
 

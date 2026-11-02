@@ -4,13 +4,13 @@
 
 | Metric | Value |
 | --- | --- |
-| Total interactions | 332 |
-| Outcome | success=11, partial=2, rework=1 |
-| Mode | agent=327, ask=1, plan=4 |
+| Total interactions | 377 |
+| Outcome | success=15, partial=2, rework=1 |
+| Mode | agent=372, ask=1, plan=4 |
 | Skills used | openspec-propose, review-diff, spec-to-tasks, write-approval-tests |
-| Sub-agents used | explore, general-purpose, spec-agent, unknown |
+| Sub-agents used | explore, general-purpose, implementer, spec-agent, test-writer, unknown |
 | MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_snapshot |
-| Human interventions | 14 |
+| Human interventions | 18 |
 
 ## Chronological
 
@@ -348,6 +348,51 @@
 | 2026-11-01T18:19:21Z | implementer | agent | implementation |  |  |  |  | success |
 | 2026-11-01T18:19:29Z | Cursor | agent |  |  | shell |  | 27/0 |  |
 | 2026-11-01T18:19:46Z |  | agent | implementation | D12: changed only arguments of existing Approve tests; assertions untouched |  | backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs |  | success |
+| 2026-11-01T18:20:11Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:20:13Z | Cursor | agent |  |  | shell |  | 27/0 |  |
+| 2026-11-01T18:20:52Z | Cursor | agent |  | git show --stat --format=fuller -1 HEAD; Write-Output "---- DIFF ----"; git diff | shell |  |  |  |
+| 2026-11-01T18:20:53Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:21:34Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:21:51Z | Cursor | agent |  | git add -- backend/src/InvoiceApp.Api/InMemoryInvoiceRepository.cs docs/evidence | shell |  |  |  |
+| 2026-11-01T18:22:13Z | general-purpose | agent |  | The user now wants Task 11 implemented exactly. Stop any broader or conflicting  |  |  |  |  |
+| 2026-11-01T18:22:23Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:22:34Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:22:42Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:23:04Z | Cursor | agent |  | git status --short; git log -3 --format="%h %s" | shell |  |  |  |
+| 2026-11-01T18:23:13Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:23:47Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-01T18:23:49Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T00:46:01Z | Cursor | agent |  | @task/12-phase2-two-approver-rule.md implement this  |  |  |  |  |
+| 2026-11-02T00:46:05Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T00:46:58Z | implementer | agent |  | Implement ONLY task T2.1 from openspec/changes/add-approval-limits-by-role/tasks |  |  |  |  |
+| 2026-11-02T00:47:30Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalRecord.cs |  |  |
+| 2026-11-02T00:47:31Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\Invoice.cs |  |  |
+| 2026-11-02T00:47:32Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-02T00:48:12Z | Cursor | agent |  |  | shell |  | 27/0 |  |
+| 2026-11-02T00:48:31Z | implementer | agent | implementation | Implement ONLY task T2.1 from openspec/changes/add-approval-limits-by-role/tasks |  | backend/src/InvoiceApp.Domain/ApprovalRecord.cs, backend/src/InvoiceApp.Domain/Invoice.cs, backend/src/InvoiceApp.Domain/ApprovalService.cs |  | success |
+| 2026-11-02T00:48:37Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T00:49:12Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalRefusedException.cs |  |  |
+| 2026-11-02T00:49:16Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalRefusedException.cs |  |  |
+| 2026-11-02T00:49:34Z | test-writer | agent |  | You are the test-writer. Implement ONLY T2.2 from c:\My Files\ai-sdlc-demo-app\t |  |  |  |  |
+| 2026-11-02T00:49:39Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T00:50:33Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T00:50:44Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T00:51:24Z | Cursor | agent |  |  | shell |  | 25/8 |  |
+| 2026-11-02T00:51:40Z | test-writer | agent | testing | You are the test-writer. Implement ONLY T2.2 from c:\My Files\ai-sdlc-demo-app\t |  | backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs |  | success |
+| 2026-11-02T00:51:46Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T00:52:38Z | Cursor | agent |  |  | shell |  | 25/8 |  |
+| 2026-11-02T00:53:18Z | implementer | agent |  | Implement ONLY T2.3 from openspec/changes/add-approval-limits-by-role/tasks.md.  |  |  |  |  |
+| 2026-11-02T00:53:41Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-02T00:53:44Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-02T00:53:46Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalService.cs |  |  |
+| 2026-11-02T00:53:48Z | Cursor | agent |  | Stop-Process -Id 35464 -Force -ErrorAction SilentlyContinue; Get-Process -Id 354 | shell |  |  |  |
+| 2026-11-02T00:54:29Z | Cursor | agent |  |  | shell |  | 33/0 |  |
+| 2026-11-02T00:54:36Z | implementer | agent | implementation | Implement ONLY T2.3 from openspec/changes/add-approval-limits-by-role/tasks.md.  |  | backend/src/InvoiceApp.Domain/ApprovalService.cs, backend/src/InvoiceApp.Domain/ApprovalRefusedException.cs |  | success |
+| 2026-11-02T00:54:42Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T00:56:35Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-02T00:57:40Z | Cursor | agent |  | python -c " import json, urllib.request, urllib.error  def login(user):     body | shell |  |  |  |
+| 2026-11-02T00:58:27Z | Cursor | agent |  | git status --short; git diff --stat; git log -8 --oneline | shell |  |  |  |
+| 2026-11-02T00:58:53Z |  | agent | implementation | No trap-table defect needed a rework. Same-user is StringComparison.Ordinal on U |  |  |  | success |
 
 ## Human oversight
 
@@ -433,6 +478,30 @@
 
 - Decision: D12: changed only arguments of existing Approve tests; assertions untouched
 - Verification: none
+- Limitation: none
+
+### 20261102T004831Z-subagent_stop
+
+- Decision: Accepted approval records on the single-approver path only. The two-approver rule was left in place as the Phase 1 refusal.
+- Verification: Approvals.Add runs after EnsureCanApprove. Phase 1 suite stayed green at 27 passed.
+- Limitation: none
+
+### 20261102T005140Z-subagent_stop
+
+- Decision: Accepted the eight Phase 2 tests. The only removal is the D13 placeholder, replaced by E4. Refusal snapshots use Approvals.ToList().
+- Verification: Red run saved: 8 failed, 25 passed. Failures are the Phase 1 requires-two-approvers refusal.
+- Limitation: none
+
+### 20261102T005436Z-subagent_stop
+
+- Decision: Accepted the two-approver path. Trap table checked in the diff before relying on the green run: UserId ordinal compare, checks before Approvals.Add, Director check only when a record already exists, same-user reason first, Approved only at or under the Director limit or at two records.
+- Verification: Green run 33 passed. INV-1007 smoke: director stays pending with one record, same user 409, manager 409, director2 Approved.
+- Limitation: none
+
+### 20261102T005853Z-manual
+
+- Decision: No trap-table defect needed a rework. Same-user is StringComparison.Ordinal on UserId, the Director check is skipped when Approvals is empty, and a refusal throws before Approvals.Add.
+- Verification: Read ApprovalService.EnsureCanApprove and Approve against the task 12 trap table.
 - Limitation: none
 
 ## Limitations
