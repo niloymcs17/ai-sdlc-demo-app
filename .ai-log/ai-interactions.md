@@ -4,13 +4,13 @@
 
 | Metric | Value |
 | --- | --- |
-| Total interactions | 377 |
-| Outcome | success=15, partial=2, rework=1 |
-| Mode | agent=372, ask=1, plan=4 |
+| Total interactions | 394 |
+| Outcome | success=16, partial=2, rework=1 |
+| Mode | agent=389, ask=1, plan=4 |
 | Skills used | openspec-propose, review-diff, spec-to-tasks, write-approval-tests |
 | Sub-agents used | explore, general-purpose, implementer, spec-agent, test-writer, unknown |
 | MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_snapshot |
-| Human interventions | 18 |
+| Human interventions | 19 |
 
 ## Chronological
 
@@ -393,6 +393,23 @@
 | 2026-11-02T00:57:40Z | Cursor | agent |  | python -c " import json, urllib.request, urllib.error  def login(user):     body | shell |  |  |  |
 | 2026-11-02T00:58:27Z | Cursor | agent |  | git status --short; git diff --stat; git log -8 --oneline | shell |  |  |  |
 | 2026-11-02T00:58:53Z |  | agent | implementation | No trap-table defect needed a rework. Same-user is StringComparison.Ordinal on U |  |  |  | success |
+| 2026-11-02T00:59:22Z | Cursor | agent |  | python scripts/annotate.py --ref "20261102T004831Z-subagent_stop" --mode agent - | shell |  |  |  |
+| 2026-11-02T01:00:02Z | Cursor | agent |  | git add -- backend docs/evidence .ai-log git commit --trailer "Co-authored-by: C | shell |  |  |  |
+| 2026-11-02T01:00:41Z | Cursor | agent |  | Stop-Process -Id 17476 -Force -ErrorAction SilentlyContinue; Get-NetTCPConnectio | shell |  |  |  |
+| 2026-11-02T01:00:52Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:01:07Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:01:16Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:05:00Z | Cursor | agent |  | @task/13-mutation-testing-before.md implemnet this  |  |  |  |  |
+| 2026-11-02T01:05:44Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-02T01:06:20Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\stryker-config.json |  |  |
+| 2026-11-02T01:06:59Z | Cursor | agent |  | dotnet tool list -g; git diff --stat mutation-before -- backend | shell |  |  |  |
+| 2026-11-02T01:09:54Z | Cursor | agent |  | python -c " import json, re from pathlib import Path html = Path(r'backend/tests | shell |  |  |  |
+| 2026-11-02T01:10:34Z | Cursor | agent |  | python -c " import json, re from pathlib import Path html = Path(r'backend/tests | shell |  |  |  |
+| 2026-11-02T01:11:09Z | Cursor | agent |  | python -c " import json, re from pathlib import Path html = Path(r'c:\My Files\a | shell |  |  |  |
+| 2026-11-02T01:12:13Z | Cursor | agent |  | python -c "p=r'docs/evidence/stryker-before.txt'; b=open(p,'rb').read(4); print( | shell |  |  |  |
+| 2026-11-02T01:13:29Z | Cursor | agent |  | Get-Process git -ErrorAction SilentlyContinue \| Select-Object Id, StartTime, CPU | shell |  |  |  |
+| 2026-11-02T01:13:39Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\mutation-survivors-before.md |  |  |
+| 2026-11-02T01:14:02Z |  | agent | testing | BEFORE mutation score is 84.75 percent on tag mutation-before. Nine survivors, a |  | backend/tests/InvoiceApp.Tests/stryker-config.json, docs/evidence/mutation-survivors-before.md |  | success |
 
 ## Human oversight
 
@@ -502,6 +519,12 @@
 
 - Decision: No trap-table defect needed a rework. Same-user is StringComparison.Ordinal on UserId, the Director check is skipped when Approvals is empty, and a refusal throws before Approvals.Add.
 - Verification: Read ApprovalService.EnsureCanApprove and Approve against the task 12 trap table.
+- Limitation: none
+
+### 20261102T011402Z-manual
+
+- Decision: BEFORE mutation score is 84.75 percent on tag mutation-before. Nine survivors, all in ApprovalService. Tests were not changed.
+- Verification: Stryker.NET 4.13.0: killed 50, survived 9, no coverage 0, timeout 0, elapsed 00:01:03. Diff of tracked backend files against mutation-before is empty.
 - Limitation: none
 
 ## Limitations

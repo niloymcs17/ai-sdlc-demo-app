@@ -1,0 +1,14 @@
+{
+  "stryker-config": {
+    "project": "InvoiceApp.Domain.csproj",
+    "mutate": [
+      "**/ApprovalService.cs",
+      "**/ApprovalLimits.cs",
+      "**/Approver.cs",
+      "**/ApprovalRecord.cs",
+      "**/ApprovalRefusedException.cs"
+    ],
+    "reporters": ["html", "markdown", "progress", "cleartext"],
+    "thresholds": { "high": 90, "low": 70, "break": 0 }
+  }
+}

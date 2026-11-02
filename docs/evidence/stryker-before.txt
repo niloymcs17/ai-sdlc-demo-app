@@ -1,0 +1,71 @@
+
+   _____ _              _               _   _ ______ _______  
+  / ____| |            | |             | \ | |  ____|__   __| 
+ | (___ | |_ _ __ _   _| | _____ _ __  |  \| | |__     | |    
+  \___ \| __| '__| | | | |/ / _ \ '__| | . ` |  __|    | |    
+  ____) | |_| |  | |_| |   <  __/ |    | |\  | |____   | |    
+ |_____/ \__|_|   \__, |_|\_\___|_| (_)|_| \_|______|  |_|    
+                   __/ |                                      
+                  |___/                                       
+
+
+Version: 4.13.0
+
+[06:37:41 INF] Analysis starting.
+[06:37:41 INF] Analyzing 1 test project(s).
+A new version of Stryker.NET (5.0.0) is available. Please consider upgrading 
+using `dotnet tool update -g dotnet-stryker`
+
+[06:37:47 INF] Found project C:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\InvoiceApp.Domain.csproj to mutate.
+[06:37:47 INF] Analysis complete.
+[06:37:47 INF] Building test project C:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\InvoiceApp.Tests.csproj (1/1)
+[06:37:48 INF] Building project InvoiceApp.Tests.csproj using dotnet build InvoiceApp.Tests.csproj -c Debug --property:Platform=AnyCPU (directory C:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests.)
+[06:38:07 INF] Number of tests found: 33 for project C:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\InvoiceApp.Domain.csproj. Initial test run started.
+[06:38:14 INF] 105 mutants created
+[06:38:14 INF] Capture mutant coverage using 'CoverageBasedTest' mode.
+Hint: by passing "--open-report or -o" the report will open automatically and 
+update the report in real-time.
+[06:38:15 INF] 5     mutants got status CompileError. Reason: Mutant caused compile errors
+[06:38:15 INF] 17    mutants got status Ignored.      Reason: Removed by block already covered filter
+[06:38:15 INF] 24    mutants got status Ignored.      Reason: Removed by mutate filter
+[06:38:15 INF] 46    total mutants are skipped for the above mentioned reasons
+[06:38:15 INF] 59    total mutants will be tested
+
+Killed:   50
+Survived:  9
+Timeout:   0
+
+
+All mutants have been tested, and your mutation score has been calculated
+╭──────────────────────────────────────┬─────┬──────┬───────┬───────┬─────┬────╮
+│ File                                 │  %  │   #  │    #  │    #  │  #  │ #  │
+│                                      │ sc… │ kil… │ time… │ surv… │ no  │ e… │
+│                                      │     │      │       │       │ cov │    │
+├──────────────────────────────────────┼─────┼──────┼───────┼───────┼─────┼────┤
+│ C:\My                                │ 84. │   50 │     0 │    55 │   0 │  5 │
+│ Files\ai-sdlc-demo-app\backend\src   │  75 │      │       │       │     │    │
+│ ApprovalLimits.cs                    │ N/A │    0 │     0 │     0 │   0 │  0 │
+│ ApprovalRecord.cs                    │ N/A │    0 │     0 │     0 │   0 │  0 │
+│ ApprovalRefusedException.cs          │ 100 │    1 │     0 │     1 │   0 │  1 │
+│                                      │ .00 │      │       │       │     │    │
+│ ApprovalService.cs                   │ 84. │   49 │     0 │    30 │   0 │  4 │
+│                                      │  48 │      │       │       │     │    │
+│ Approver.cs                          │ N/A │    0 │     0 │     0 │   0 │  0 │
+│ DiscountCalculator.cs                │ N/A │    0 │     0 │    22 │   0 │  0 │
+│ IInvoiceRepository.cs                │ N/A │    0 │     0 │     0 │   0 │  0 │
+│ Invoice.cs                           │ N/A │    0 │     0 │     2 │   0 │  0 │
+│ InvoiceStatus.cs                     │ N/A │    0 │     0 │     0 │   0 │  0 │
+│ Roles.cs                             │ N/A │    0 │     0 │     0 │   0 │  0 │
+╰──────────────────────────────────────┴─────┴──────┴───────┴───────┴─────┴────╯
+
+Your html report has been generated at:
+file://C:/My%20Files/ai-sdlc-demo-app/backend/tests/InvoiceApp.Tests/StrykerOutp
+ut/2026-11-02.06-37-40/reports/mutation-report.html
+You can open it in your browser of choice.
+
+Your Markdown summary has been generated at:
+file://C:/My 
+Files/ai-sdlc-demo-app/backend/tests/InvoiceApp.Tests/StrykerOutput/2026-11-02.0
+6-37-40/reports/mutation-report.md
+[06:38:44 INF] Time Elapsed 00:01:02.7193510
+[06:38:44 INF] The final mutation score is 84.75 %
