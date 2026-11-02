@@ -84,3 +84,16 @@ Filled in as each group lands. `human_changes` are edits made after reading the 
 - `Submit_RejectsInvoiceThatIsNotADraft`, `Reject_RequiresAReason`, blank user id, and null approver now also assert the repository `Updated` list is empty.
 - `Approve_InvoiceNotPending_ThrowsStatusErrorRatherThanRefusal` now snapshots `DecidedBy`, `DecidedAt`, `DecisionNote`, and `Approvals`, and asserts `Update` was not called. The message and status assertions are unchanged.
 - D16 / E17 in the OpenSpec change: null and blank user id throw `ArgumentException` with `An approver with a user id is required.` `ArgumentNullException` was not adopted. It would still be 400, and this task does not edit `ApprovalService`.
+
+## Playwright
+
+Reviewed the task 17 draft in `e2e/pages/LoginPage.ts`, `e2e/pages/InvoiceAppPage.ts`, and `e2e/tests/over-limit-approval.spec.ts`.
+
+| Check | Draft | Fix |
+|---|---|---|
+| Weak waits | No `waitForTimeout` or sleep. Clicks and `expect` retry until the control is ready. | None. |
+| Brittle selectors | `getByRole` and `getByLabel` only. Alert is scoped to the Approvals tabpanel. Row is scoped to the All invoices table, then to cells named Pending Approval and None (`exact: true` on None). | None. |
+| Unchanged invoice | Asserted Pending Approval, approvals None, and the Approve button still present. | The invoices table is filled on sign-in and is not fetched again when approval fails. Those cells were the pre-click snapshot. After the alert, the test now reloads (session stays in `sessionStorage`) and only then checks the row and that the invoice is still on the Approvals list. |
+| Reason | `toHaveText(/exceeds the Manager approval limit/i)`. | None. |
+| Determinism | Customer name is `E2E over-limit ${Date.now()}`. Invoice id comes from the create response. | None. |
+| Limit numbers | `75000` is the created amount only. The test does not branch on it. | None. |

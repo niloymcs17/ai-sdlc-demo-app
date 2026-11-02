@@ -1,0 +1,35 @@
+
+Running 1 test using 1 worker
+
+(node:38596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\over-limit-approval.spec.ts:5:5 › Manager over-limit approval is refused and the invoice stays pending (7.7s)
+
+
+  1) [chromium] › tests\over-limit-approval.spec.ts:5:5 › Manager over-limit approval is refused and the invoice stays pending 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('tabpanel', { name: 'Approvals' }).getByRole('alert')
+    Expected pattern: /exceeds the Manager approval limit/i
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('tabpanel', { name: 'Approvals' }).getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('tabpanel', { name: 'Approvals' }).getByRole('alert')
+
+
+      13 |   await app.approveInvoice(invoiceId);
+      14 |
+    > 15 |   await expect(app.refusalAlert()).toHaveText(/exceeds the Manager approval limit/i);
+         |                                    ^
+      16 |
+      17 |   // A refusal does not re-fetch the lists. Reload so status and approvers come from the server.
+      18 |   await page.reload();
+        at C:\My Files\ai-sdlc-demo-app\e2e\tests\over-limit-approval.spec.ts:15:36
+
+    Error Context: test-results\over-limit-approval-Manage-9fea3-d-the-invoice-stays-pending-chromium\error-context.md
+
+  1 failed
+    [chromium] › tests\over-limit-approval.spec.ts:5:5 › Manager over-limit approval is refused and the invoice stays pending 

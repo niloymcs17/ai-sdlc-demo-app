@@ -4,12 +4,12 @@
 
 | Metric | Value |
 | --- | --- |
-| Total interactions | 455 |
+| Total interactions | 546 |
 | Outcome | success=20, partial=2, rework=1 |
-| Mode | agent=449, ask=1, edit=1, plan=4 |
+| Mode | agent=540, ask=1, edit=1, plan=4 |
 | Skills used | openspec-propose, review-diff, spec-to-tasks, write-approval-tests |
 | Sub-agents used | explore, general-purpose, implementer, spec-agent, test-writer, unknown |
-| MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_snapshot |
+| MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_press_key, cursor-ide-browser/browser_snapshot |
 | Human interventions | 23 |
 
 ## Chronological
@@ -471,6 +471,97 @@
 | 2026-11-02T01:31:55Z | Cursor | agent |  |  | shell |  | 38/0 |  |
 | 2026-11-02T01:32:14Z |  | edit | testing | Deleted the weaker draft-approve duplicate. Failure paths now assert Update was  |  | backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs, openspec/changes/add-approval-limits-by-role/specs/approval-limits/spec.md, openspec/changes/add-approval-limits-by-role/design.md, docs/evidence/test-review-notes.md |  | success |
 | 2026-11-02T01:32:44Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-02T01:33:22Z | Cursor | agent |  | python scripts/render_log.py | shell |  |  |  |
+| 2026-11-02T01:33:57Z | Cursor | agent |  | git status --short | shell |  |  |  |
+| 2026-11-02T01:33:57Z | Cursor | agent |  | git diff --stat | shell |  |  |  |
+| 2026-11-02T01:34:00Z | Cursor | agent |  | git log -8 --oneline | shell |  |  |  |
+| 2026-11-02T01:34:50Z | Cursor | agent |  | git add -- backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs backend/tests/ | shell |  |  |  |
+| 2026-11-02T01:34:57Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:35:12Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:35:50Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T05:09:34Z | Cursor | agent |  | @task/15-mutation-testing-after.md implement this  |  |  |  |  |
+| 2026-11-02T05:12:16Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-02T05:13:03Z | Cursor | agent |  | $latest = Get-ChildItem "backend/tests/InvoiceApp.Tests/StrykerOutput" \| Sort-Ob | shell |  |  |  |
+| 2026-11-02T05:13:43Z | Cursor | agent |  | Get-ChildItem "backend/tests/InvoiceApp.Tests/StrykerOutput/2026-11-02.10-40-11" | shell |  |  |  |
+| 2026-11-02T05:14:23Z | Cursor | agent |  | python -c "p=r'docs/evidence/stryker-after-report.html'; t=open(p,encoding='utf- | shell |  |  |  |
+| 2026-11-02T05:14:26Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\scripts\_mut_check.py |  |  |
+| 2026-11-02T05:15:01Z | Cursor | agent |  | python scripts/_mut_check.py | shell |  |  |  |
+| 2026-11-02T05:15:07Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\scripts\_mut_check.py |  |  |
+| 2026-11-02T05:15:41Z | Cursor | agent |  | python scripts/_mut_check.py | shell |  |  |  |
+| 2026-11-02T05:15:48Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\scripts\_mut_check.py |  |  |
+| 2026-11-02T05:16:24Z | Cursor | agent |  | python scripts/_mut_check.py | shell |  |  |  |
+| 2026-11-02T05:16:27Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\scripts\_mut_check.py |  |  |
+| 2026-11-02T05:17:02Z | Cursor | agent |  | python scripts/_mut_check.py | shell |  |  |  |
+| 2026-11-02T05:17:05Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\scripts\_mut_check.py |  |  |
+| 2026-11-02T05:17:40Z | Cursor | agent |  | python scripts/_mut_check.py | shell |  |  |  |
+| 2026-11-02T05:17:44Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\scripts\_mut_check.py |  |  |
+| 2026-11-02T05:18:22Z | Cursor | agent |  | python scripts/_mut_check.py | shell |  |  |  |
+| 2026-11-02T05:18:31Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\scripts\_mut_check.py |  |  |
+| 2026-11-02T05:19:08Z | Cursor | agent |  | python scripts/_mut_check.py | shell |  |  |  |
+| 2026-11-02T05:19:12Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\scripts\_mut_check.py |  |  |
+| 2026-11-02T05:19:47Z | Cursor | agent |  | python scripts/_mut_check.py | shell |  |  |  |
+| 2026-11-02T05:19:50Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\scripts\_mut_check.py |  |  |
+| 2026-11-02T05:20:25Z | Cursor | agent |  | python scripts/_mut_check.py | shell |  |  |  |
+| 2026-11-02T05:20:43Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\mutation-comparison.md |  |  |
+| 2026-11-02T05:21:21Z | Cursor | agent |  | Remove-Item -Force "scripts/_mut_check.py"; git status --short -- docs/evidence  | shell |  |  |  |
+| 2026-11-02T05:21:58Z | Cursor | agent |  | git add -- docs/evidence/mutation-comparison.md docs/evidence/stryker-after-repo | shell |  |  |  |
+| 2026-11-02T05:22:04Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T05:26:13Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T05:26:42Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T05:26:57Z | Cursor | agent |  | @task/16-ui-approver-visibility.md implement this  |  |  |  |  |
+| 2026-11-02T05:27:21Z | implementer | agent |  | You are the implementer. Workspace: c:\My Files\ai-sdlc-demo-app.  Read AGENTS.m |  |  |  |  |
+| 2026-11-02T05:27:45Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\wwwroot\index.html |  |  |
+| 2026-11-02T05:27:47Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\wwwroot\app.js |  |  |
+| 2026-11-02T05:27:49Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Api\wwwroot\app.js |  |  |
+| 2026-11-02T05:28:25Z | Cursor | agent |  |  | shell |  | 38/0 |  |
+| 2026-11-02T05:29:19Z | Cursor | agent |  | try { (Invoke-WebRequest -Uri http://localhost:5000 -UseBasicParsing -TimeoutSec | shell |  |  |  |
+| 2026-11-02T05:29:34Z | Cursor | agent |  |  | browser_navigate |  |  |  |
+| 2026-11-02T05:29:39Z | Cursor | agent |  |  | browser_lock |  |  |  |
+| 2026-11-02T05:29:46Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-02T05:29:58Z | Cursor | agent |  |  | browser_snapshot |  |  |  |
+| 2026-11-02T05:30:06Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-02T05:30:45Z | Cursor | agent |  | (Invoke-WebRequest -Uri "http://localhost:5000/?nocache=1" -UseBasicParsing).Con | shell |  |  |  |
+| 2026-11-02T05:31:02Z | Cursor | agent |  |  | browser_navigate |  |  |  |
+| 2026-11-02T05:31:16Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-02T05:31:25Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-02T05:31:34Z | Cursor | agent |  |  | browser_lock |  |  |  |
+| 2026-11-02T05:32:05Z | Cursor | agent |  | Stop-Process -Id 36252 -Force -ErrorAction SilentlyContinue; Get-NetTCPConnectio | shell |  |  |  |
+| 2026-11-02T05:32:46Z | Cursor | agent |  | Stop-Process -Id 9064 -Force | shell |  |  |  |
+| 2026-11-02T05:33:00Z | implementer | agent |  | You are the implementer. Workspace: c:\My Files\ai-sdlc-demo-app.  Read AGENTS.m |  |  |  |  |
+| 2026-11-02T05:33:05Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T05:33:10Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T05:33:16Z | Cursor | agent |  |  | edit | C:\Users\niloybiswas\.cursor\projects\c-My-Files-ai-sdlc-demo-app\agent-tools\8a1c558a-96fd-4d9c-a3d4-b83aca8ece14.txt |  |  |
+| 2026-11-02T05:33:37Z | Cursor | agent |  |  | browser_navigate |  |  |  |
+| 2026-11-02T05:33:44Z | Cursor | agent |  |  | browser_lock |  |  |  |
+| 2026-11-02T05:33:50Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-02T05:33:55Z | Cursor | agent |  |  | browser_fill |  |  |  |
+| 2026-11-02T05:34:01Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-02T05:34:10Z | Cursor | agent |  |  | browser_press_key |  |  |  |
+| 2026-11-02T05:34:16Z | Cursor | agent |  |  | browser_snapshot |  |  |  |
+| 2026-11-02T05:34:23Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-02T05:34:29Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-02T05:34:35Z | Cursor | agent |  |  | browser_snapshot |  |  |  |
+| 2026-11-02T05:34:42Z | Cursor | agent |  |  | browser_click |  |  |  |
+| 2026-11-02T05:34:49Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-02T05:35:30Z | Cursor | agent |  | (Invoke-WebRequest -Uri "http://localhost:5000/index.html" -Headers @{"Cache-Con | shell |  |  |  |
+| 2026-11-02T05:35:36Z | Cursor | agent |  |  | browser_cdp |  |  |  |
+| 2026-11-02T06:06:01Z | Cursor | agent |  | @task/17-playwright-e2e.md implement this |  |  |  |  |
+| 2026-11-02T06:06:53Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T06:06:58Z | test-writer | agent |  | Task 17: draft Playwright end-to-end files only. Do NOT run tests. Do NOT npm in |  |  |  |  |
+| 2026-11-02T06:07:31Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-02T06:08:12Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\e2e\pages\LoginPage.ts |  |  |
+| 2026-11-02T06:08:13Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\e2e\pages\InvoiceAppPage.ts |  |  |
+| 2026-11-02T06:08:15Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\e2e\tests\over-limit-approval.spec.ts |  |  |
+| 2026-11-02T06:08:22Z | test-writer | agent |  | Task 17: draft Playwright end-to-end files only. Do NOT run tests. Do NOT npm in |  |  |  |  |
+| 2026-11-02T06:09:04Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\e2e\tests\over-limit-approval.spec.ts |  |  |
+| 2026-11-02T06:09:12Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\test-review-notes.md |  |  |
+| 2026-11-02T06:09:48Z | Cursor | agent |  | Get-NetTCPConnection -LocalPort 5000 -ErrorAction SilentlyContinue \| Select-Obje | shell |  |  |  |
+| 2026-11-02T06:12:18Z | Cursor | agent |  |  | shell |  | 1/0 |  |
+| 2026-11-02T06:13:44Z | Cursor | agent |  |  | shell |  | 1/0 |  |
+| 2026-11-02T06:13:52Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\src\InvoiceApp.Domain\ApprovalLimits.cs |  |  |
+| 2026-11-02T06:14:24Z | Cursor | agent |  | netstat -ano \| findstr ":5000" | shell |  |  |  |
+| 2026-11-02T06:14:50Z | Cursor | agent |  |  | shell |  | 0/1 |  |
+| 2026-11-02T06:15:30Z | Cursor | agent |  | git checkout -- backend/src; git diff -- backend/src/InvoiceApp.Domain/ApprovalL | shell |  |  |  |
 
 ## Human oversight
 
