@@ -4,13 +4,13 @@
 
 | Metric | Value |
 | --- | --- |
-| Total interactions | 394 |
-| Outcome | success=16, partial=2, rework=1 |
-| Mode | agent=389, ask=1, plan=4 |
+| Total interactions | 455 |
+| Outcome | success=20, partial=2, rework=1 |
+| Mode | agent=449, ask=1, edit=1, plan=4 |
 | Skills used | openspec-propose, review-diff, spec-to-tasks, write-approval-tests |
 | Sub-agents used | explore, general-purpose, implementer, spec-agent, test-writer, unknown |
 | MCP tools used | cursor-ide-browser/browser_cdp, cursor-ide-browser/browser_click, cursor-ide-browser/browser_fill, cursor-ide-browser/browser_lock, cursor-ide-browser/browser_navigate, cursor-ide-browser/browser_snapshot |
-| Human interventions | 19 |
+| Human interventions | 23 |
 
 ## Chronological
 
@@ -410,6 +410,67 @@
 | 2026-11-02T01:13:29Z | Cursor | agent |  | Get-Process git -ErrorAction SilentlyContinue \| Select-Object Id, StartTime, CPU | shell |  |  |  |
 | 2026-11-02T01:13:39Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\mutation-survivors-before.md |  |  |
 | 2026-11-02T01:14:02Z |  | agent | testing | BEFORE mutation score is 84.75 percent on tag mutation-before. Nine survivors, a |  | backend/tests/InvoiceApp.Tests/stryker-config.json, docs/evidence/mutation-survivors-before.md |  | success |
+| 2026-11-02T01:14:31Z | Cursor | agent |  | python scripts/annotate.py --manual-entry --mode agent --stage testing --parent- | shell |  |  |  |
+| 2026-11-02T01:15:05Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:15:21Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:15:29Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:15:54Z | Cursor | agent |  | @task/14-test-review.md implement this  |  |  |  |  |
+| 2026-11-02T01:16:03Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:19:14Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\test-review-notes.md |  |  |
+| 2026-11-02T01:19:23Z | test-writer | agent |  | You are the test-writer for task 14, survivor group Reason text only.  Read and  |  |  |  |  |
+| 2026-11-02T01:19:26Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:20:05Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:20:06Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:20:08Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:20:09Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:20:11Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:20:48Z | Cursor | agent |  |  | shell |  | 31/3 |  |
+| 2026-11-02T01:21:11Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:21:13Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:21:14Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:21:53Z | Cursor | agent |  |  | shell |  | 34/0 |  |
+| 2026-11-02T01:22:12Z | test-writer | agent | testing | You are the test-writer for task 14, survivor group Reason text only.  Read and  |  |  |  | success |
+| 2026-11-02T01:22:17Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:23:01Z | Cursor | agent |  |  | shell |  | 34/0 |  |
+| 2026-11-02T01:23:31Z | Cursor | agent |  |  | shell |  | 34/0 |  |
+| 2026-11-02T01:23:45Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-02T01:23:59Z | test-writer | agent |  | You are the test-writer for task 14, survivor group State only (S2, S4, S6, S7). |  |  |  |  |
+| 2026-11-02T01:24:03Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:24:29Z | Cursor | agent |  | Stop-Process -Id 30600 -Force -ErrorAction SilentlyContinue; Get-Process dotnet  | shell |  |  |  |
+| 2026-11-02T01:24:30Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\FakeInvoiceRepository.cs |  |  |
+| 2026-11-02T01:24:31Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:24:32Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:24:35Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:24:39Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:24:51Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:25:06Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:25:49Z | Cursor | agent |  |  | shell |  | 37/0 |  |
+| 2026-11-02T01:26:03Z | test-writer | agent | testing | You are the test-writer for task 14, survivor group State only (S2, S4, S6, S7). |  |  |  | success |
+| 2026-11-02T01:27:21Z | Cursor | agent |  |  | shell |  | 37/0 |  |
+| 2026-11-02T01:27:30Z | test-writer | agent |  | You are the test-writer for task 14, survivor group Combinations only (S8).  Rea |  |  |  |  |
+| 2026-11-02T01:27:35Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:27:58Z | Cursor | agent |  |  | shell |  |  |  |
+| 2026-11-02T01:28:08Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:28:10Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:28:48Z | Cursor | agent |  |  | shell |  | 39/0 |  |
+| 2026-11-02T01:29:29Z | test-writer | agent | testing | You are the test-writer for task 14, survivor group Combinations only (S8).  Rea |  |  |  | success |
+| 2026-11-02T01:29:33Z | Cursor | agent |  |  |  |  |  |  |
+| 2026-11-02T01:30:12Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:30:13Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:30:15Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:30:16Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:30:18Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\backend\tests\InvoiceApp.Tests\ApprovalServiceTests.cs |  |  |
+| 2026-11-02T01:30:19Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\specs\approval-limits\spec.md |  |  |
+| 2026-11-02T01:30:21Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\design.md |  |  |
+| 2026-11-02T01:30:23Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\design.md |  |  |
+| 2026-11-02T01:30:25Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\openspec\changes\add-approval-limits-by-role\design.md |  |  |
+| 2026-11-02T01:30:33Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\test-review-notes.md |  |  |
+| 2026-11-02T01:30:35Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\test-review-notes.md |  |  |
+| 2026-11-02T01:30:37Z | Cursor | agent |  |  | edit | c:\My Files\ai-sdlc-demo-app\docs\evidence\test-review-notes.md |  |  |
+| 2026-11-02T01:31:25Z | Cursor | agent |  | python scripts/annotate.py --ref "20261102T012929Z-subagent_stop" --mode agent - | shell |  |  |  |
+| 2026-11-02T01:31:55Z | Cursor | agent |  |  | shell |  | 38/0 |  |
+| 2026-11-02T01:32:14Z |  | edit | testing | Deleted the weaker draft-approve duplicate. Failure paths now assert Update was  |  | backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs, openspec/changes/add-approval-limits-by-role/specs/approval-limits/spec.md, openspec/changes/add-approval-limits-by-role/design.md, docs/evidence/test-review-notes.md |  | success |
+| 2026-11-02T01:32:44Z | Cursor | agent |  |  | shell |  |  |  |
 
 ## Human oversight
 
@@ -525,6 +586,30 @@
 
 - Decision: BEFORE mutation score is 84.75 percent on tag mutation-before. Nine survivors, all in ApprovalService. Tests were not changed.
 - Verification: Stryker.NET 4.13.0: killed 50, survived 9, no coverage 0, timeout 0, elapsed 00:01:03. Diff of tracked backend files against mutation-before is empty.
+- Limitation: none
+
+### 20261102T012212Z-subagent_stop
+
+- Decision: Accepted reason-text assertions. Messages are the full runtime text, including the ArgumentException parameter suffix. Capture now copies Approvals and DecisionNote. No production edits.
+- Verification: dotnet test backend/InvoiceApp.sln: 34 passed, 0 failed.
+- Limitation: none
+
+### 20261102T012603Z-subagent_stop
+
+- Decision: Accepted repository Updated list and non-pending reject theory. Success tests now require the saved invoice. No production edits.
+- Verification: dotnet test backend/InvoiceApp.sln: 37 passed, 0 failed.
+- Limitation: none
+
+### 20261102T012929Z-subagent_stop
+
+- Decision: Accepted the under-limit second record test and the Director-alone theory for limit plus 0.01 and plus 1. No production edits.
+- Verification: Agent reported 39 passed before the later human edits.
+- Limitation: none
+
+### 20261102T013214Z-manual
+
+- Decision: Deleted the weaker draft-approve duplicate. Failure paths now assert Update was not called. Non-pending approve snapshots decision fields and approvals. D16 records null and blank user id as ArgumentException.
+- Verification: dotnet test backend/InvoiceApp.sln: 38 passed, 0 failed. Saved to docs/evidence/after-review-test-run.txt.
 - Limitation: none
 
 ## Limitations

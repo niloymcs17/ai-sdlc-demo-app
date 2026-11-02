@@ -143,3 +143,18 @@ Approving an invoice that is not `PendingApproval` SHALL keep the existing non-p
 - **WHEN** a Manager or a Director approves it
 - **THEN** the attempt throws `InvalidOperationException` with message `Invoice {id} is {status}; only pending invoices can be decided.`
 - **AND** the exception is not an `ApprovalRefusedException` and the status is unchanged
+
+### Requirement: An approver with a user id is required
+`Approve` SHALL reject a null approver and a blank user id before it loads or changes the invoice. Both cases throw `ArgumentException` (parameter `approver`) with message `An approver with a user id is required.` `Handle` maps `ArgumentException` to 400. `ArgumentNullException` was considered for null and not used: it is already an `ArgumentException`, so the HTTP status would not change, and one guard covers both cases.
+
+#### Scenario: null approver
+- **GIVEN** a pending invoice
+- **WHEN** `Approve` is called with a null approver
+- **THEN** the attempt throws `ArgumentException` with message `An approver with a user id is required.`
+- **AND** `Status`, `DecidedBy`, `DecidedAt`, and `Approvals` are unchanged
+
+#### Scenario: blank user id
+- **GIVEN** a pending invoice
+- **WHEN** `Approve` is called with an approver whose user id is blank
+- **THEN** the attempt throws `ArgumentException` with message `An approver with a user id is required.`
+- **AND** the invoice is unchanged

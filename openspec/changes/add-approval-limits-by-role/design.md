@@ -38,6 +38,7 @@ See proposal.md for why. `ApprovalService` already moves invoices through Draft,
 | D13 | Phase 1 refuses amounts above the Director limit with `Invoices above 500,000.00 require two approvers.` Phase 2 supersedes that placeholder. The Phase 2 commit body says so. | Phase 1 still needs a defined result before the two-approver path exists. |
 | D14 | Reject after one of two approvals stays allowed for Manager or Director. Existing reject behaviour is unchanged and `Approvals` is kept for audit. | Declining an invoice is a different action from refusing an approval attempt. |
 | D15 | Use OpenSpec. | It is the spec tool chosen for this repo and it generates Cursor slash commands. |
+| D16 | A null approver and a blank user id both throw `ArgumentException` with `An approver with a user id is required.` `Handle` already maps that to 400. | `ArgumentNullException` would not change the HTTP result, and splitting the guard needs a production edit this test review does not make. |
 
 ### Check order
 
@@ -69,7 +70,7 @@ Phase 1 stops before the two-approver branch and refuses with the D13 message in
 
 ## Open Questions
 
-None. D1 to D15 are resolved above. E9 is D7 and E10 is D8.
+None. D1 to D16 are resolved above. E9 is D7 and E10 is D8. Null and blank approvers are D16.
 
 ## Edge cases
 
@@ -91,3 +92,4 @@ None. D1 to D15 are resolved above. E9 is D7 and E10 is D8.
 | E14 | Same user who is a Manager approves second (both checks fail) | Same-user reason returned (D10). Message: `The same user cannot approve this invoice twice.` |
 | E15 | Approve an invoice that is not `PendingApproval` | Existing 409 behaviour unchanged. Message: `Invoice {id} is {status}; only pending invoices can be decided.` |
 | E16 | Two different Managers above 500,000 | Second refused: must be a Director. Message: `The second approver must be a Director.` |
+| E17 | Null approver, or a blank user id | `ArgumentException`: `An approver with a user id is required.` Invoice unchanged. HTTP 400 (D16). |
